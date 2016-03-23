@@ -20,12 +20,13 @@ public class dailyworkprogram extends AppCompatActivity {
     Button starttime, endtime;
     TextView startTV, endTV;
     Spinner workstationnamespinner, mediumoftransportspinner;
-    String selectedworkspinner, selectedmot;
+    String selectedworkspinner, selectedmot, usernamepassed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dailyworkprogram);
+        usernamepassed = getIntent().getExtras().getString("username");
         starttime = (Button) findViewById(R.id.startTimeBtn);
         endtime = (Button) findViewById(R.id.endButton);
         startTV = (TextView) findViewById(R.id.startTimetextView);

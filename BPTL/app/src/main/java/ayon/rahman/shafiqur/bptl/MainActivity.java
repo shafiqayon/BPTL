@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText usernameet, passwordet;
     Button loginbtn;
     public String category = null;
-    String servername = "http://192.168.1.100/s.php", name = "name", password = "password", statusReply;
+    String servername = "http://192.168.1.105/s.php", name = "name", password = "password", statusReply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                             if (category.equals("1")) {
                                 Toast.makeText(MainActivity.this, "Right Credentials", Toast.LENGTH_LONG).show();
                                 Intent i = new Intent(MainActivity.this, dash.class);
+                                i.putExtra("username", TempUser);
                                 startActivity(i);
                             } else if (category.equals("0")) {
                                 Toast.makeText(MainActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
