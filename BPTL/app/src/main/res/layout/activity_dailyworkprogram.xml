@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="ayon.rahman.shafiqur.bptl.dailyworkprogram">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/clientName"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/serviceName"
+            android:layout_below="@+id/clientName"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Time"
+            android:id="@+id/startTimeBtn"
+            android:layout_below="@+id/serviceName"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Time"
+            android:id="@+id/startTimetextView"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/startTimeBtn"
+            android:textSize="20dp"
+            android:gravity="center" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="End Time"
+            android:id="@+id/endButton"
+            android:layout_below="@+id/startTimetextView"
+            android:layout_alignParentEnd="true" />
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="End Time "
+            android:id="@+id/endTimetextView"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_below="@+id/endButton"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:ems="10"
+            android:hint="Hours"
+            android:id="@+id/hours"
+            android:layout_below="@+id/endTimetextView"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="Rate"
+            android:id="@+id/rate"
+            android:gravity="center"
+            android:layout_below="@+id/hours"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ws"
+            android:layout_below="@+id/rate"
+            android:layout_centerHorizontal="true" />
+
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mot"
+            android:layout_below="@+id/ws"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:hint="Remarks"
+            android:id="@+id/remarks"
+            android:layout_below="@+id/mot"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+
+
+</ScrollView>
