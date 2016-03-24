@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText usernameet, passwordet;
     Button loginbtn;
     public String category = null;
-    String servername = "http://192.168.1.105/s.php", name = "name", password = "password", statusReply;
+    String servername = "http://192.168.0.23/s.php", name = "name", password = "password", statusReply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
                             JSONObject object = new JSONObject(response);
                             category = object.getString("status");
-                            // Toast.makeText(MainActivity.this, category, Toast.LENGTH_LONG).show();
-                            // Toast.makeText(MainActivity.this, "Inside String Request : "+category, Toast.LENGTH_LONG).show();
                             if (category.equals("1")) {
                                 Toast.makeText(MainActivity.this, "Right Credentials", Toast.LENGTH_LONG).show();
                                 Intent i = new Intent(MainActivity.this, dash.class);
@@ -82,15 +80,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Toast.makeText(MainActivity.this, "Inside OnCreate", Toast.LENGTH_LONG).show();
-      /*  if (category.equals("1"))
-        {
-            Toast.makeText(MainActivity.this,"Right Credentials",Toast.LENGTH_LONG).show();
-         *//*   Intent i = new Intent(MainActivity.this,dash.class);
-            startActivity(i);*//*
-        }
-        else if(category.equals("0"))
-        {
-            Toast.makeText(MainActivity.this,"Wrong Credentials",Toast.LENGTH_LONG).show();
-        }*/
     }
 }
