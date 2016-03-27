@@ -10,26 +10,24 @@
     tools:context="ayon.rahman.shafiqur.bptl.dash">
 
     <Button
+        android:layout_marginTop="50dp"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:text="Customer Setup"
         android:id="@+id/customer"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="false"
+        android:textSize="30dp" />
 
     <Button
+        android:layout_marginTop="50dp"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:text="Daily Work Program"
         android:id="@+id/dailywork"
         android:layout_below="@+id/customer"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button3"
-        android:layout_below="@+id/dailywork"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class dailyworkprogram extends AppCompatActivity {
     private ArrayList<String> clientListForSpinner = new ArrayList<String>();
@@ -39,9 +40,9 @@ public class dailyworkprogram extends AppCompatActivity {
     RequestQueue requestQueue;
     String[] servicenamearray;
     Spinner workstationnamespinner, mediumoftransportspinner, clientSpinner, servicenamespinner;
-    String selectedworkspinner, selectedmot, usernamepassed, serviceselected = "", servernameforservice = "http://192.168.0.23/service.php", sernameforclientinfo = "http://192.168.0.23/clientnametowork.php", clients = "", clientselected = "", temp = null, temp2 = null;
+    String selectedworkspinner, selectedmot, usernamepassed, serviceselected = "", servernameforservice = "http://192.168.1.100/service.php", sernameforclientinfo = "http://192.168.0.23/clientnametowork.php", clients = "", clientselected = "", temp = null, temp2 = null;
     ArrayAdapter<String> clientAdapter, serviceNameAdapter;
-
+    long endh, endm, starth, startm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +127,8 @@ public class dailyworkprogram extends AppCompatActivity {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(dailyworkprogram.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        starth = hourOfDay;
+                        startm = minute;
                         startTV.setText(hourOfDay + ":" + minute);
                     }
                 }, hour, minute, false);
@@ -144,11 +147,17 @@ public class dailyworkprogram extends AppCompatActivity {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(dailyworkprogram.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        endh = hourOfDay;
+                        endm = minute;
                         endTV.setText(hourOfDay + ":" + minute);
+                        long startmil = (TimeUnit.HOURS.toMillis(endh) + TimeUnit.MINUTES.toMillis(endm)) - (TimeUnit.HOURS.toMillis(starth) + TimeUnit.MINUTES.toMillis(startm));
+                        Toast.makeText(dailyworkprogram.this, "Time Duration " + TimeUnit.MILLISECONDS.toMinutes(startmil) / 60 + ":" + TimeUnit.MILLISECONDS.toMinutes(startmil) % 60, Toast.LENGTH_LONG).show();
                     }
                 }, hour, minute, false);
                 timePickerDialog.setTitle("Select End Time");
                 timePickerDialog.show();
+
+
             }
         });
         //workstation spinner
