@@ -29,11 +29,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Client_Setup extends AppCompatActivity {
-    final String servername = "http://http://192.168.1.100/clientsetup.php";
+    final String servername = "http://http://192.168.1.105/clientsetup.php";
     public RequestQueue queue, requestQueue;
     public String category = null, selectedInSpinner = "nothing selected", industrySelected = null, addressTypeSelected = null, clientTypeSelected = null, selectedInSpinnerAddresstype = null, selectedInSpinnerClientType = null;
 
-    String temp, temp2, industryServerforspinner = "http://http://192.168.1.100/industryspinner.php";
+    String temp, temp2, industryServerforspinner = "http://192.168.1.105/industryspinner.php";
     EditText clientName, website, companyName, contactPerson, phone, address, email, officephone,
             decisionMaker, decisionMakerNumber, middleMan, consultant, finance, possibleRequirement, remarks;
     String sclientName, swebsite, scompanyName, scontactPerson, sphone, saddress, semail, sofficephone,

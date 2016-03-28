@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -33,29 +34,32 @@ import java.util.concurrent.TimeUnit;
 
 public class dailyworkprogram extends AppCompatActivity {
     private ArrayList<String> clientListForSpinner = new ArrayList<String>();
-    ArrayList<ArrayList<String>> serviceName = new ArrayList<ArrayList<String>>();
+    private ArrayList<String> workstationnamelistforspinner = new ArrayList<String>();
+    private ArrayList<ArrayList<String>> serviceName = new ArrayList<ArrayList<String>>();
 
     Button starttime, endtime;
     TextView startTV, endTV;
+    EditText Remarks, hourset;
     RequestQueue requestQueue;
     String[] servicenamearray;
     Spinner workstationnamespinner, mediumoftransportspinner, clientSpinner, servicenamespinner;
-    String selectedworkspinner, selectedmot, usernamepassed, serviceselected = "", servernameforservice = "http://192.168.1.100/service.php", sernameforclientinfo = "http://192.168.0.23/clientnametowork.php", clients = "", clientselected = "", temp = null, temp2 = null;
+    String selectedworkspinner, selectedmot, usernamepassed, serverdailywork = "http://192.168.1.105/dailywork.php", serviceselected = "", servernameforservice = "http://192.168.1.105/service.php", sernameforclientinfo = "http://192.168.1.105/clientnametowork.php", clients = "", clientselected = "", temp = null, temp2 = null, servernameforwork = "http://192.168.1.105/wsnames.php";
     ArrayAdapter<String> clientAdapter, serviceNameAdapter;
-    long endh, endm, starth, startm;
+    public long endh, endm, starth, startm;
+    long startmil;
+    Button savebutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dailyworkprogram);
         usernamepassed = getIntent().getExtras().getString("username");
-
         Toast.makeText(dailyworkprogram.this, "User name passed in daily work :" + usernamepassed, Toast.LENGTH_SHORT).show();
-
         starttime = (Button) findViewById(R.id.startTimeBtn);
         endtime = (Button) findViewById(R.id.endButton);
         startTV = (TextView) findViewById(R.id.startTimetextView);
         endTV = (TextView) findViewById(R.id.endTimetextView);
-
+        Remarks = (EditText) findViewById(R.id.remarks);
+      
         workstationnamespinner = (Spinner) findViewById(R.id.ws);
         mediumoftransportspinner = (Spinner) findViewById(R.id.mot);
         clientSpinner = (Spinner) findViewById(R.id.clientNameInSpinner);
@@ -63,10 +67,11 @@ public class dailyworkprogram extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(dailyworkprogram.this);
 
+        savebutton = (Button) findViewById(R.id.savework);
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, sernameforclientinfo, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(dailyworkprogram.this, "inside string req", Toast.LENGTH_SHORT).show();
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = new JSONArray(response);
@@ -150,8 +155,9 @@ public class dailyworkprogram extends AppCompatActivity {
                         endh = hourOfDay;
                         endm = minute;
                         endTV.setText(hourOfDay + ":" + minute);
-                        long startmil = (TimeUnit.HOURS.toMillis(endh) + TimeUnit.MINUTES.toMillis(endm)) - (TimeUnit.HOURS.toMillis(starth) + TimeUnit.MINUTES.toMillis(startm));
+                        startmil = (TimeUnit.HOURS.toMillis(endh) + TimeUnit.MINUTES.toMillis(endm)) - (TimeUnit.HOURS.toMillis(starth) + TimeUnit.MINUTES.toMillis(startm));
                         Toast.makeText(dailyworkprogram.this, "Time Duration " + TimeUnit.MILLISECONDS.toMinutes(startmil) / 60 + ":" + TimeUnit.MILLISECONDS.toMinutes(startmil) % 60, Toast.LENGTH_LONG).show();
+
                     }
                 }, hour, minute, false);
                 timePickerDialog.setTitle("Select End Time");
@@ -160,25 +166,8 @@ public class dailyworkprogram extends AppCompatActivity {
 
             }
         });
-        //workstation spinner
 
-        String[] workstations = new String[]{"Dhaka", "Savar"};
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, workstations);
 
-        workstationnamespinner.setAdapter(adapter2);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        workstationnamespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("selectedworkspinner", (String) parent.getItemAtPosition(position));
-                selectedworkspinner = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
         //setting up the medium of transport
         String[] mots = new String[]{"Bus", "Rickshaw", "CNG", "Taxicab", "Train"};
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
@@ -247,8 +236,88 @@ public class dailyworkprogram extends AppCompatActivity {
 
             }
         });
+        JsonArrayRequest jsonArrayRequestworkstation = new JsonArrayRequest(servernameforwork, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        temp = null;
+                        JSONObject object = (JSONObject) jsonArray.get(i);
+                        temp = object.getString("WS_NAME");
+                        workstationnamelistforspinner.add(temp);
+                        Log.e("WS_NAME", temp);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //setting up the spinner for workstations
+                ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(dailyworkprogram.this, android.R.layout.simple_spinner_item, workstationnamelistforspinner);
+                workstationnamespinner.setAdapter(adapter3);
+                adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                workstationnamespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("selectedworkspinner", (String) parent.getItemAtPosition(position));
+                        selectedworkspinner = parent.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("ws error", volleyError.toString());
+            }
+        });
 
 
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final String starttime = starth + ":" + startm;
+                final String endtime = endh + ":" + endm;
+                startmil = (TimeUnit.HOURS.toMillis(endh) + TimeUnit.MINUTES.toMillis(endm)) - (TimeUnit.HOURS.toMillis(starth) + TimeUnit.MINUTES.toMillis(startm));
+
+                final double hours = TimeUnit.MILLISECONDS.toHours(startmil);
+                Log.e("Converted", String.valueOf(hours));
+
+                Toast.makeText(dailyworkprogram.this, "in long" + hours, Toast.LENGTH_LONG).show();
+                final String remarks = String.valueOf(Remarks.getText());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, serverdailywork, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("user", usernamepassed);
+                        params.put("clientName", clientselected);
+                        params.put("servicename", serviceselected);
+                        params.put("hrs", String.valueOf(hours));
+                        params.put("startTime", starttime);
+                        params.put("endTime", endtime);
+                        params.put("mot", selectedmot);
+                        params.put("wsname", selectedworkspinner);
+                        params.put("remarks", remarks);
+                        return params;
+                    }
+                };
+                requestQueue.add(stringRequest);
+
+            }
+        });
+        requestQueue.add(jsonArrayRequestworkstation);
         requestQueue.add(jsonArrayRequest);
 
     }
