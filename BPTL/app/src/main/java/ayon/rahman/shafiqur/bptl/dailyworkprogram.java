@@ -43,7 +43,10 @@ public class dailyworkprogram extends AppCompatActivity {
     RequestQueue requestQueue;
     String[] servicenamearray;
     Spinner workstationnamespinner, mediumoftransportspinner, clientSpinner, servicenamespinner;
-    String selectedworkspinner, selectedmot, usernamepassed, serverdailywork = "http://192.168.1.105/dailywork.php", serviceselected = "", servernameforservice = "http://192.168.1.105/service.php", sernameforclientinfo = "http://192.168.1.105/clientnametowork.php", clients = "", clientselected = "", temp = null, temp2 = null, servernameforwork = "http://192.168.1.105/wsnames.php";
+    String selectedworkspinner, selectedmot, usernamepassed, serverdailywork = "http://192.168.1.107/dailywork.php",
+            serviceselected = "", servernameforservice = "http://192.168.1.107/service.php",
+            sernameforclientinfo = "http://192.168.1.107/clientnametowork.php", clients = "", clientselected = "",
+            temp = null, temp2 = null, servernameforwork = "http://192.168.1.107/wsnames.php";
     ArrayAdapter<String> clientAdapter, serviceNameAdapter;
     public long endh, endm, starth, startm;
     long startmil;
@@ -53,7 +56,7 @@ public class dailyworkprogram extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dailyworkprogram);
         usernamepassed = getIntent().getExtras().getString("username");
-        Toast.makeText(dailyworkprogram.this, "User name passed in daily work :" + usernamepassed, Toast.LENGTH_SHORT).show();
+       /* Toast.makeText(dailyworkprogram.this, "User name passed in daily work :" + usernamepassed, Toast.LENGTH_SHORT).show();*/
         starttime = (Button) findViewById(R.id.startTimeBtn);
         endtime = (Button) findViewById(R.id.endButton);
         startTV = (TextView) findViewById(R.id.startTimetextView);

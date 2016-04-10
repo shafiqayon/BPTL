@@ -29,15 +29,15 @@ import java.util.List;
 import java.util.Map;
 
 public class Client_Setup extends AppCompatActivity {
-    final String servername = "http://http://192.168.1.105/clientsetup.php";
+    final String servername = "http://192.168.1.107/clientsetup.php";
     public RequestQueue queue, requestQueue;
     public String category = null, selectedInSpinner = "nothing selected", industrySelected = null, addressTypeSelected = null, clientTypeSelected = null, selectedInSpinnerAddresstype = null, selectedInSpinnerClientType = null;
 
-    String temp, temp2, industryServerforspinner = "http://192.168.1.105/industryspinner.php";
+    String temp, temp2, industryServerforspinner = "http://192.168.1.107/industryspinner.php";
     EditText clientName, website, companyName, contactPerson, phone, address, email, officephone,
             decisionMaker, decisionMakerNumber, middleMan, consultant, finance, possibleRequirement, remarks;
     String sclientName, swebsite, scompanyName, scontactPerson, sphone, saddress, semail, sofficephone,
-            sdecisionMaker, sdecisionMakerNumber, smiddleMan, sconsultant, sfinance, spossibleRequirement, sremarks;
+            sdecisionMaker, sdecisionMakerNumber, smiddleMan, sconsultant, sfinance, spossibleRequirement, sremarks, usernamepassed;
     Spinner industrylistspinner;
     ArrayAdapter<String> industryAdapter;
     Button save;
@@ -48,6 +48,7 @@ public class Client_Setup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client__setup);
+        usernamepassed = getIntent().getExtras().getString("username");
         save = (Button) findViewById(R.id.save);
 
         industrylistspinner = (Spinner) findViewById(R.id.industry);
@@ -223,6 +224,8 @@ public class Client_Setup extends AppCompatActivity {
                         params.put("industry", industrySelected);
                         params.put("addressType", addressTypeSelected);
                         params.put("clientType", clientTypeSelected);
+                        params.put("userlogin", usernamepassed);
+
                         return params;
                     }
                 };

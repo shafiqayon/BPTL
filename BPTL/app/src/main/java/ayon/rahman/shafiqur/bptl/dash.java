@@ -21,7 +21,9 @@ public class dash extends AppCompatActivity {
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = new Intent(dash.this, Client_Setup.class);
+                i.putExtra("username", usernamepassed);
                 startActivity(i);
             }
         });

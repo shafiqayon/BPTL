@@ -3,19 +3,30 @@ package ayon.rahman.shafiqur.bptl;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     EditText usernameet, passwordet;
     Button loginbtn;
     public String category = null;
-    String servername = "http://192.168.1.105/s.php", name = "name", password = "password", statusReply;
+    String servername = "http://192.168.1.107/s.php", name = "name", password = "password", statusReply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         usernameet = (EditText) findViewById(R.id.user_Name);
         passwordet = (EditText) findViewById(R.id.password);
         loginbtn = (Button) findViewById(R.id.loginbutton);
-        loginbtn.setOnClickListener(new View.OnClickListener() {
+/*        loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String TempUser = String.valueOf(usernameet.getText());
@@ -39,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
                 }
             }
-        });
-        /*loginbtn.setOnClickListener(new View.OnClickListener() {
+        });*/
+        loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String TempUser = String.valueOf(usernameet.getText());
@@ -50,11 +61,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-
                             JSONObject object = new JSONObject(response);
                             category = object.getString("status");
                             if (category.equals("1")) {
-                                Toast.makeText(MainActivity.this, "Right Credentials", Toast.LENGTH_LONG).show();
+                                /*Toast.makeText(MainActivity.this, "Right Credentials", Toast.LENGTH_LONG).show();*/
                                 Intent i = new Intent(MainActivity.this, dash.class);
                                 i.putExtra("username", TempUser);
                                 startActivity(i);
@@ -82,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 };
                 requestQueue.add(stringRequest);
             }
-        });*/
-        Toast.makeText(MainActivity.this, "Inside OnCreate", Toast.LENGTH_LONG).show();
+        });
+        /*Toast.makeText(MainActivity.this, "Inside OnCreate", Toast.LENGTH_LONG).show();*/
     }
 }
