@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ayon.rahman.shafiqur.bptl.MainActivity">
+    tools:context="ayon.rahman.shafiqur.bptl.MainActivity"
+    android:background="@drawable/loginback">
 
     <EditText
         android:layout_width="fill_parent"
@@ -16,6 +17,7 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/user_Name"
         android:hint="User Name"
+        android:textColor="#FFFFFF"
         android:gravity="center"
         android:layout_marginTop="49dp"
         android:layout_alignParentTop="true"
@@ -28,6 +30,7 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/password"
         android:hint="Password"
+        android:textColor="#FFFFFF"
         android:gravity="center"
         android:inputType="textPassword"
         android:layout_below="@+id/user_Name"
@@ -38,6 +41,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Log In"
+
         android:id="@+id/loginbutton"
         android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"

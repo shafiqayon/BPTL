@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         usernameet = (EditText) findViewById(R.id.user_Name);
         passwordet = (EditText) findViewById(R.id.password);
+        usernameet.setHintTextColor(getResources().getColor(R.color.grey));
+        passwordet.setHintTextColor(getResources().getColor(R.color.grey));
         loginbtn = (Button) findViewById(R.id.loginbutton);
 /*        loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
