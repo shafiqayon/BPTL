@@ -29,11 +29,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Client_Setup extends AppCompatActivity {
-    final String servername = "http://192.168.1.107/clientsetup.php";
+    final String servername = "http://103.229.84.171/clientsetup.php";
     public RequestQueue queue, requestQueue;
     public String category = null, selectedInSpinner = "nothing selected", industrySelected = null, addressTypeSelected = null, clientTypeSelected = null, selectedInSpinnerAddresstype = null, selectedInSpinnerClientType = null;
 
-    String temp, temp2, industryServerforspinner = "http://192.168.1.107/industryspinner.php";
+    String temp, temp2, industryServerforspinner = "http://103.229.84.171/industryspinner.php";
     EditText clientName, website, companyName, contactPerson, phone, address, email, officephone,
             decisionMaker, decisionMakerNumber, middleMan, consultant, finance, possibleRequirement, remarks;
     String sclientName, swebsite, scompanyName, scontactPerson, sphone, saddress, semail, sofficephone,
@@ -175,8 +175,10 @@ public class Client_Setup extends AppCompatActivity {
                 addressTypeSelected = selectedInSpinnerAddresstype;
                 clientTypeSelected = selectedInSpinnerClientType;
 
-                Toast.makeText(Client_Setup.this, sclientName + swebsite + scompanyName + scontactPerson + sphone + saddress + semail + sofficephone +
+               /* Toast.makeText(Client_Setup.this, sclientName + swebsite + scompanyName + scontactPerson + sphone + saddress + semail + sofficephone +
                         sdecisionMaker + sdecisionMakerNumber + smiddleMan + sconsultant + sfinance + spossibleRequirement + sremarks + industrySelected + addressTypeSelected + clientTypeSelected, Toast.LENGTH_LONG).show();
+        */
+                Toast.makeText(Client_Setup.this, "Data Saved", Toast.LENGTH_LONG).show();
                 Log.e("Sending Items", sclientName + swebsite + scompanyName + scontactPerson + sphone + saddress + semail + sofficephone +
                         sdecisionMaker + sdecisionMakerNumber + smiddleMan + sconsultant + sfinance + spossibleRequirement + sremarks + industrySelected + addressTypeSelected + clientTypeSelected);
 

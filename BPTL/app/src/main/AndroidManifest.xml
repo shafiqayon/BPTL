@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".Client_Setup" />
         <activity android:name=".dash" />
-        <activity android:name=".dailyworkprogram"></activity>
+        <activity android:name=".dailyworkprogram" />
+        <activity android:name=".clientView"></activity>
     </application>
 
 </manifest>

@@ -1,23 +1,23 @@
 package ayon.rahman.shafiqur.bptl;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class dash extends AppCompatActivity {
-    Button customer, dailywork;
+    Button customer, dailywork, clientView;
     String usernamepassed = "empty";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash);
         usernamepassed = getIntent().getExtras().getString("username");
-        Toast.makeText(dash.this, usernamepassed, Toast.LENGTH_LONG).show();
+       /* Toast.makeText(dash.this, usernamepassed, Toast.LENGTH_LONG).show();*/
         customer = (Button) findViewById(R.id.customer);
         dailywork = (Button) findViewById(R.id.dailywork);
+        clientView = (Button) findViewById(R.id.clientview);
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +35,15 @@ public class dash extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        clientView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(dash.this, clientView.class);
+                i.putExtra("username", usernamepassed);
+                startActivity(i);
+            }
+        });
+
 
 
     }

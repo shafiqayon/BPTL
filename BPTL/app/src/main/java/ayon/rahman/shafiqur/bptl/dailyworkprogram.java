@@ -43,12 +43,13 @@ public class dailyworkprogram extends AppCompatActivity {
     RequestQueue requestQueue;
     String[] servicenamearray;
     Spinner workstationnamespinner, mediumoftransportspinner, clientSpinner, servicenamespinner;
-    String selectedworkspinner, selectedmot, usernamepassed, serverdailywork = "http://192.168.1.107/dailywork.php",
-            serviceselected = "", servernameforservice = "http://192.168.1.107/service.php",
-            sernameforclientinfo = "http://192.168.1.107/clientnametowork.php", clients = "", clientselected = "",
-            temp = null, temp2 = null, servernameforwork = "http://192.168.1.107/wsnames.php";
+    String selectedworkspinner, selectedmot, usernamepassed, serverdailywork = "http://103.229.84.171/dailywork.php",
+            serviceselected = "", servernameforservice = "http://103.229.84.171/service.php",
+            sernameforclientinfo = "http://103.229.84.171/clientnametowork.php", clients = "", clientselected = "",
+            temp = null, temp2 = null, servernameforwork = "http://103.229.84.171/wsnames.php";
     ArrayAdapter<String> clientAdapter, serviceNameAdapter;
     public long endh, endm, starth, startm;
+    public int endmonth, enddate, endyear, startmonth, startdate, startyear;
     long startmil;
     Button savebutton;
     @Override
@@ -90,7 +91,7 @@ public class dailyworkprogram extends AppCompatActivity {
                 }
 
 
-                Toast.makeText(dailyworkprogram.this, clients, Toast.LENGTH_LONG).show();
+              /*  Toast.makeText(dailyworkprogram.this, clients, Toast.LENGTH_LONG).show();*/
 
                 clientAdapter = new ArrayAdapter<String>(dailyworkprogram.this, android.R.layout.simple_spinner_item, clientListForSpinner);
                 clientAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -151,6 +152,7 @@ public class dailyworkprogram extends AppCompatActivity {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
+
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(dailyworkprogram.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -288,7 +290,7 @@ public class dailyworkprogram extends AppCompatActivity {
                 final double hours = TimeUnit.MILLISECONDS.toHours(startmil);
                 Log.e("Converted", String.valueOf(hours));
 
-                Toast.makeText(dailyworkprogram.this, "in long" + hours, Toast.LENGTH_LONG).show();
+               /* Toast.makeText(dailyworkprogram.this, "in long" + hours, Toast.LENGTH_LONG).show();*/
                 final String remarks = String.valueOf(Remarks.getText());
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, serverdailywork, new Response.Listener<String>() {
                     @Override
@@ -317,8 +319,9 @@ public class dailyworkprogram extends AppCompatActivity {
                     }
                 };
                 requestQueue.add(stringRequest);
-
+                Toast.makeText(dailyworkprogram.this, "Data Saved", Toast.LENGTH_LONG).show();
             }
+
         });
         requestQueue.add(jsonArrayRequestworkstation);
         requestQueue.add(jsonArrayRequest);

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText usernameet, passwordet;
     Button loginbtn;
     public String category = null;
-    String servername = "http://192.168.1.107/s.php", name = "name", password = "password", statusReply;
+    String servername = "http://103.229.84.171/s.php", name = "name", password = "password", statusReply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
