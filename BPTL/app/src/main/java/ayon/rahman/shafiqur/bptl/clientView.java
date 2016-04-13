@@ -3,6 +3,10 @@ package ayon.rahman.shafiqur.bptl;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +27,16 @@ public class clientView extends AppCompatActivity {
     String usernamepassed, clientGet = "http://103.229.84.171/getClient.php", temp, CLIENT_ID, CLIENT_NAME, ADDRESS, PHONE_NUMBER,
             EMAIL, OFFICE_PHONE, WEB_ADDRESS, CONTACT_PERSON, ADDRESS_2, INDUSTRY_NAME, CLIENT_TYPE, ENTER_DT, USER_NAME, COMPANY_NAME;
     RequestQueue requestQueue;
-
+    ListView listView;
+    ArrayAdapter<String> adapter;
+    public ArrayList<String> companyarray = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_view);
         usernamepassed = getIntent().getExtras().getString("username");
+        listView = (ListView) findViewById(R.id.listView);
+
         Log.e("username passed ", usernamepassed);
         requestQueue = Volley.newRequestQueue(clientView.this);
 
@@ -45,13 +54,31 @@ public class clientView extends AppCompatActivity {
                         /*temp = (String) jsonObject.get("CLIENT_NAME");
 
                         clientListForSpinner.add(temp);*/
-                        CLIENT_ID = (String) jsonObject.get("CLIENT_ID");
+                        /*CLIENT_ID = (String) jsonObject.get("CLIENT_ID");*/
                         CLIENT_NAME = (String) jsonObject.get("CLIENT_NAME");
+                        companyarray.add(CLIENT_NAME);
+                        final String[] category = companyarray.toArray(new String[companyarray.size()]);
+                        adapter = new ArrayAdapter<String>(clientView.this, R.layout.custom_textview, category);
+                        listView.setAdapter(adapter);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                              /*  Bundle messageBundle = new Bundle();
+                                messageBundle.putString("category", companyarray.get(position));
+
+                                Intent i = new Intent(pdftitleforothers.this, pdfother.class);
+                                i.putExtra("category", strArrcategory.get(position));
+                                startActivity(i);*/
+                            }
+                        });
+                        adapter.notifyDataSetChanged();
+
+
                    /* *//*ADDRESS = (String) jsonObject.get("ADDRESS");*//*
                         PHONE_NUMBER = (String) jsonObject.get("PHONE_NUMBER");
                         EMAIL = (String) jsonObject.get("EMAIL");
                         OFFICE_PHONE = (String) jsonObject.get("OFFICE_PHONE");*/
-                        if (jsonObject.isNull("WEB_ADDRESS") == false) {
+                       /* if (jsonObject.isNull("WEB_ADDRESS") == false) {
                             WEB_ADDRESS = (String) jsonObject.get("WEB_ADDRESS");
                         }
 
@@ -64,7 +91,7 @@ public class clientView extends AppCompatActivity {
 
                         if (jsonObject.isNull("WEB_ADDRESS") == false) {
                             ENTER_DT = (String) jsonObject.get("ENTER_DT");
-                        }
+                        }*/
                       /*  CONTACT_PERSON = (String) jsonObject.get("CONTACT_PERSON");*/
 
 
