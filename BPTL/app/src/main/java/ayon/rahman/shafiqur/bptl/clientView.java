@@ -1,12 +1,15 @@
 package ayon.rahman.shafiqur.bptl;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,6 +33,7 @@ public class clientView extends AppCompatActivity {
     ListView listView;
     ArrayAdapter<String> adapter;
     public ArrayList<String> companyarray = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,26 @@ public class clientView extends AppCompatActivity {
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Toast.makeText(getApplicationContext(), "toasty toast", Toast.LENGTH_SHORT).show();
+                                AlertDialog alBuilder = new AlertDialog.Builder(clientView.this).create();
+                                alBuilder.setMessage("Please Choose an Option");
+                                alBuilder.setTitle("Client");
+                                alBuilder.setIcon(R.drawable.ic_launcher);
+                                alBuilder.setButton(DialogInterface.BUTTON1, "View ", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(getApplicationContext(), "Clicked on View", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                alBuilder.setButton(DialogInterface.BUTTON2, "Edit", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(getApplicationContext(), "Clicked on Edit", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                alBuilder.show();
+
                               /*  Bundle messageBundle = new Bundle();
                                 messageBundle.putString("category", companyarray.get(position));
 

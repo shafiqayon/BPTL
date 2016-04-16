@@ -21,7 +21,9 @@
         <activity android:name=".Client_Setup" />
         <activity android:name=".dash" />
         <activity android:name=".dailyworkprogram" />
-        <activity android:name=".clientView"></activity>
+        <activity android:name=".clientView" />
+        <activity android:name=".alerttest" />
+        <activity android:name=".clientViewDetails"></activity>
     </application>
 
 </manifest>

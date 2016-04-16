@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class dash extends AppCompatActivity {
-    Button customer, dailywork, clientView;
+    Button customer, dailywork, clientView, alert;
     String usernamepassed = "empty";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,7 @@ public class dash extends AppCompatActivity {
         customer = (Button) findViewById(R.id.customer);
         dailywork = (Button) findViewById(R.id.dailywork);
         clientView = (Button) findViewById(R.id.clientview);
+        alert = (Button) findViewById(R.id.alerttest);
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +40,14 @@ public class dash extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(dash.this, clientView.class);
+                i.putExtra("username", usernamepassed);
+                startActivity(i);
+            }
+        });
+        alert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(dash.this, alerttest.class);
                 i.putExtra("username", usernamepassed);
                 startActivity(i);
             }
