@@ -1,6 +1,7 @@
 package ayon.rahman.shafiqur.bptl;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -66,7 +67,7 @@ public class clientView extends AppCompatActivity {
                         listView.setAdapter(adapter);
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                                 Toast.makeText(getApplicationContext(), "toasty toast", Toast.LENGTH_SHORT).show();
                                 AlertDialog alBuilder = new AlertDialog.Builder(clientView.this).create();
                                 alBuilder.setMessage("Please Choose an Option");
@@ -76,6 +77,10 @@ public class clientView extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Toast.makeText(getApplicationContext(), "Clicked on View", Toast.LENGTH_SHORT).show();
+                                        Intent i = new Intent(clientView.this, clientViewDetails.class);
+                                        i.putExtra("item", companyarray.get(position));
+                                        Toast.makeText(getApplicationContext(), companyarray.get(position), Toast.LENGTH_SHORT).show();
+                                        startActivity(i);
                                     }
                                 });
                                 alBuilder.setButton(DialogInterface.BUTTON2, "Edit", new DialogInterface.OnClickListener() {
