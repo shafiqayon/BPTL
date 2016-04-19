@@ -18,7 +18,7 @@ public class dash extends AppCompatActivity {
         customer = (Button) findViewById(R.id.customer);
         dailywork = (Button) findViewById(R.id.dailywork);
         clientView = (Button) findViewById(R.id.clientview);
-        alert = (Button) findViewById(R.id.alerttest);
+
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,15 +44,6 @@ public class dash extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        alert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(dash.this, alerttest.class);
-                i.putExtra("username", usernamepassed);
-                startActivity(i);
-            }
-        });
-
 
 
     }

@@ -23,7 +23,8 @@
         <activity android:name=".dailyworkprogram" />
         <activity android:name=".clientView" />
         <activity android:name=".alerttest" />
-        <activity android:name=".clientViewDetails"></activity>
+        <activity android:name=".clientViewDetails" />
+        <activity android:name=".clientUpdate"></activity>
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        tools:context="ayon.rahman.shafiqur.bptl.Client_Setup">
+        tools:context="ayon.rahman.shafiqur.bptl.clientUpdate">
 
         <TextView
             android:paddingTop="30dp"
@@ -22,6 +22,7 @@
 
             android:gravity="center"
             android:layout_marginTop="15dp" />
+
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -15,31 +15,32 @@
         android:text="Customer Setup"
         android:id="@+id/customer"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="#78c257"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffff" />
 
     <Button
-        android:layout_marginTop="53dp"
+
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:text="Daily Work Program"
         android:id="@+id/dailywork"
         android:layout_below="@+id/customer"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="#78c257"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffff" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
         android:text="Client Views"
         android:id="@+id/clientview"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alert"
-        android:id="@+id/alerttest"
-        android:layout_below="@+id/clientview"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/dailywork"
+        android:layout_alignParentStart="true"
+        android:background="#78c257"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

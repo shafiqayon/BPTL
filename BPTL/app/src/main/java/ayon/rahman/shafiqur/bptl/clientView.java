@@ -68,7 +68,7 @@ public class clientView extends AppCompatActivity {
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                                Toast.makeText(getApplicationContext(), "toasty toast", Toast.LENGTH_SHORT).show();
+
                                 AlertDialog alBuilder = new AlertDialog.Builder(clientView.this).create();
                                 alBuilder.setMessage("Please Choose an Option");
                                 alBuilder.setTitle("Client");
@@ -76,17 +76,17 @@ public class clientView extends AppCompatActivity {
                                 alBuilder.setButton(DialogInterface.BUTTON1, "View ", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Toast.makeText(getApplicationContext(), "Clicked on View", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getApplicationContext(), "Clicked on View", Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(clientView.this, clientViewDetails.class);
                                         i.putExtra("item", companyarray.get(position));
-                                        Toast.makeText(getApplicationContext(), companyarray.get(position), Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getApplicationContext(), companyarray.get(position), Toast.LENGTH_SHORT).show();
                                         startActivity(i);
                                     }
                                 });
                                 alBuilder.setButton(DialogInterface.BUTTON2, "Edit", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Toast.makeText(getApplicationContext(), "Clicked on Edit", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Edit Option Coming Soon", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
