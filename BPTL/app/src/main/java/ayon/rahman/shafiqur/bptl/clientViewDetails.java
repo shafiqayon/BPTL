@@ -175,23 +175,6 @@ public class clientViewDetails extends AppCompatActivity {
                     } else {
                         spossibleRequirement.setText("No Data  for Possible Requirements");
                     }
-
-//                        clientNameget = (String) jsonObject.get("CLIENT_NAME");
-//
-//                        clientType = (String) jsonObject.get("CLIENT_TYPE");
-//                        industryname = (String) jsonObject.get("INDUSTRY_NAME");
-//                        contactPerson = (String) jsonObject.get("CONTACT_PERSON");
-//                        address = (String) jsonObject.get("ADDRESS_LINE_1");
-//                        phone = (String) jsonObject.get("CONT_NUMBER");
-//                        officephone = (String) jsonObject.get("OFFICE_PHONE");
-//                        email = (String) jsonObject.get("EMAIL");
-//                        decisionMaker = (String) jsonObject.get("DECISION_MAKER");
-//                        decisionMakerNumber = (String) jsonObject.get("DEC_NUMBER");
-//                        middleMan = (String) jsonObject.get("MIDDLE_MAN");
-//                        consultant = (String) jsonObject.get("CONSULTANT");
-//                        finance = (String) jsonObject.get("FINANCE_FROM");
-//                        remarks = (String) jsonObject.get("REMARKS");
-//                        possibleRequirement = (String) jsonObject.get("POSSIBLE_REQUIRMENT");
                     Log.e("check", "this is what we get " + (String) jsonObject.get("CLIENT_NAME"));
 
 

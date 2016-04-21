@@ -54,12 +54,6 @@ public class clientView extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         temp = null;
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-/*
-                        CLIENT_ID, CLIENT_NAME, ADDRESS, PHONE_NUMBER, EMAIL, OFFICE_PHONE, WEB_ADDRESS, CONTACT_PERSON,ADDRESS_2,INDUSTRY_NAME,CLIENT_TYPE,ENTER_DT,USER_NAME, COMPANY_NAME*/
-                        /*temp = (String) jsonObject.get("CLIENT_NAME");
-
-                        clientListForSpinner.add(temp);*/
-                        /*CLIENT_ID = (String) jsonObject.get("CLIENT_ID");*/
                         CLIENT_NAME = (String) jsonObject.get("CLIENT_NAME");
                         companyarray.add(CLIENT_NAME);
                         final String[] category = companyarray.toArray(new String[companyarray.size()]);
@@ -76,56 +70,27 @@ public class clientView extends AppCompatActivity {
                                 alBuilder.setButton(DialogInterface.BUTTON1, "View ", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-//                                        Toast.makeText(getApplicationContext(), "Clicked on View", Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(clientView.this, clientViewDetails.class);
                                         i.putExtra("item", companyarray.get(position));
-//                                        Toast.makeText(getApplicationContext(), companyarray.get(position), Toast.LENGTH_SHORT).show();
                                         startActivity(i);
                                     }
                                 });
                                 alBuilder.setButton(DialogInterface.BUTTON2, "Edit", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+//                                        Intent i = new Intent(clientView.this, clientUpdate.class);
+//                                        i.putExtra("item", companyarray.get(position));
+//                                        startActivity(i);
+
+
                                         Toast.makeText(getApplicationContext(), "Edit Option Coming Soon", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
                                 alBuilder.show();
-
-                              /*  Bundle messageBundle = new Bundle();
-                                messageBundle.putString("category", companyarray.get(position));
-
-                                Intent i = new Intent(pdftitleforothers.this, pdfother.class);
-                                i.putExtra("category", strArrcategory.get(position));
-                                startActivity(i);*/
                             }
                         });
                         adapter.notifyDataSetChanged();
-
-
-                   /* *//*ADDRESS = (String) jsonObject.get("ADDRESS");*//*
-                        PHONE_NUMBER = (String) jsonObject.get("PHONE_NUMBER");
-                        EMAIL = (String) jsonObject.get("EMAIL");
-                        OFFICE_PHONE = (String) jsonObject.get("OFFICE_PHONE");*/
-                       /* if (jsonObject.isNull("WEB_ADDRESS") == false) {
-                            WEB_ADDRESS = (String) jsonObject.get("WEB_ADDRESS");
-                        }
-
-                        if (jsonObject.isNull("WEB_ADDRESS") == false) {
-                            INDUSTRY_NAME = (String) jsonObject.get("INDUSTRY_NAME");
-                        }
-                        if (jsonObject.isNull("WEB_ADDRESS") == false) {
-                            CLIENT_TYPE = (String) jsonObject.get("CLIENT_TYPE");
-                        }
-
-                        if (jsonObject.isNull("WEB_ADDRESS") == false) {
-                            ENTER_DT = (String) jsonObject.get("ENTER_DT");
-                        }*/
-                      /*  CONTACT_PERSON = (String) jsonObject.get("CONTACT_PERSON");*/
-
-
-
-                     /*   COMPANY_NAME = (String) jsonObject.get("COMPANY_NAME");*/
                         Log.e(i + " objects value ", CLIENT_ID + " " + CLIENT_NAME + " " + ADDRESS + " " + PHONE_NUMBER + " " + EMAIL + " " + OFFICE_PHONE + " " + WEB_ADDRESS + " " + CONTACT_PERSON + " " + ADDRESS_2 + " " + INDUSTRY_NAME + " " + CLIENT_TYPE + " " + ENTER_DT + " " + USER_NAME + " " + COMPANY_NAME);
                     }
 
