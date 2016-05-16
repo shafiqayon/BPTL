@@ -200,7 +200,25 @@ public class clientUpdate extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("customername", clientName);
+                params.put("customername", String.valueOf(sclientName.getText()));
+                params.put("website", String.valueOf(swebsite.getText()));
+              /*  params.put("companyName", );*/
+                params.put("contactPerson", String.valueOf(scontactPerson.getText()));
+                params.put("phone", String.valueOf(sphone.getText()));
+                params.put("address", String.valueOf(saddress.getText()));
+                params.put("email", String.valueOf(semail.getText()));
+                params.put("officephone", String.valueOf(sofficephone.getText()));
+                params.put("decisionMaker", String.valueOf(sdecisionMaker.getText()));
+                params.put("decisionMakerNumber", String.valueOf(sdecisionMakerNumber.getText()));
+                params.put("middleMan", String.valueOf(smiddleMan.getText()));
+                params.put("consultant", String.valueOf(sconsultant.getText()));
+                params.put("finance", String.valueOf(sfinance.getText()));
+                params.put("possibleRequirement", String.valueOf(spossibleRequirement.getText()));
+                params.put("remarks", String.valueOf(sremarks.getText()));
+                /*params.put("industry", industrySelected);
+                params.put("addressType", addressTypeSelected);
+                params.put("clientType", clientTypeSelected);
+                params.put("userlogin", usernamepassed);*/
                 return params;
             }
         };
