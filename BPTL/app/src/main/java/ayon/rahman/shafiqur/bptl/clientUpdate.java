@@ -3,7 +3,10 @@ package ayon.rahman.shafiqur.bptl;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,11 +23,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class clientUpdate extends AppCompatActivity {
-    String clientName = "empty", serverAddress = "http://103.229.84.171/clientUpdate.php";
+    String clientName = "empty", serverAddressfordata = "http://103.229.84.171/clientUpdateView.php", serverAddressforupdate = "http://103.229.84.171/clientUpdate.php";
     String website, contactPerson, phone, address, email, officephone, clientType, industryname,
             decisionMaker, decisionMakerNumber, middleMan, consultant, finance, possibleRequirement, remarks;
     EditText sclientName, swebsite, scontactPerson, sphone, saddress, semail, sofficephone, sclientType, sindustryname,
             sdecisionMaker, sdecisionMakerNumber, smiddleMan, sconsultant, sfinance, spossibleRequirement, sremarks;
+    Button updateButton;
     RequestQueue requestQueue;
 
     @Override
@@ -32,7 +36,11 @@ public class clientUpdate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_update);
         clientName = getIntent().getExtras().getString("item");
+        Toast.makeText(clientUpdate.this, clientName, Toast.LENGTH_LONG).show();
         requestQueue = Volley.newRequestQueue(clientUpdate.this);
+
+        updateButton = (Button) findViewById(R.id.update);
+
 
         sclientName = (EditText) findViewById(R.id.EditText2);
         swebsite = (EditText) findViewById(R.id.EditText3);
@@ -51,13 +59,14 @@ public class clientUpdate extends AppCompatActivity {
         spossibleRequirement = (EditText) findViewById(R.id.EditText16);
         sremarks = (EditText) findViewById(R.id.EditText17);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverAddress, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverAddressfordata, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONArray jsonArray = null;
                 try {
 //                    jsonArray = new JSONArray(response);
                     JSONObject jsonObject = new JSONObject(response);
+                    Log.e("ClientUpdate Json", String.valueOf(jsonObject));
 //                    category = object.getString("status");
 //                    for (int i = 0; i < jsonArray.length(); i++) {
 //
@@ -200,25 +209,7 @@ public class clientUpdate extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("customername", String.valueOf(sclientName.getText()));
-                params.put("website", String.valueOf(swebsite.getText()));
-              /*  params.put("companyName", );*/
-                params.put("contactPerson", String.valueOf(scontactPerson.getText()));
-                params.put("phone", String.valueOf(sphone.getText()));
-                params.put("address", String.valueOf(saddress.getText()));
-                params.put("email", String.valueOf(semail.getText()));
-                params.put("officephone", String.valueOf(sofficephone.getText()));
-                params.put("decisionMaker", String.valueOf(sdecisionMaker.getText()));
-                params.put("decisionMakerNumber", String.valueOf(sdecisionMakerNumber.getText()));
-                params.put("middleMan", String.valueOf(smiddleMan.getText()));
-                params.put("consultant", String.valueOf(sconsultant.getText()));
-                params.put("finance", String.valueOf(sfinance.getText()));
-                params.put("possibleRequirement", String.valueOf(spossibleRequirement.getText()));
-                params.put("remarks", String.valueOf(sremarks.getText()));
-                /*params.put("industry", industrySelected);
-                params.put("addressType", addressTypeSelected);
-                params.put("clientType", clientTypeSelected);
-                params.put("userlogin", usernamepassed);*/
+                params.put("clientName", clientName);
                 return params;
             }
         };
@@ -226,5 +217,64 @@ public class clientUpdate extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
 
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest sendUpdateData = new StringRequest(Request.Method.POST, serverAddressforupdate, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONArray jsonArray = null;
+                        try {
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            Log.e("send Json", String.valueOf(jsonObject));
+
+                            Log.e("Return Json", String.valueOf(jsonObject));
+                            Log.e("Return Json", response);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.getStackTraceString(e);
+                        }
+                        ;
+
+                        Toast.makeText(clientUpdate.this, "webiste: - > " + swebsite.getText() + sclientName.getText() + sclientType.getText() + sconsultant.getText() + sphone.getText() + spossibleRequirement.getText() + sremarks.getText(), Toast.LENGTH_SHORT).show();
+                        ;
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("clientName", clientName);
+                        params.put("website", String.valueOf(swebsite.getText()));
+                        params.put("companyName", "Dim");
+                        params.put("contactPerson", String.valueOf(scontactPerson.getText()));
+                        params.put("phone", String.valueOf(sphone.getText()));
+                        params.put("address", String.valueOf(saddress.getText()));
+                        params.put("email", String.valueOf(semail.getText()));
+                        params.put("officephone", String.valueOf(sofficephone.getText()));
+                        params.put("decisionMaker", String.valueOf(sdecisionMaker.getText()));
+                        params.put("decisionMakerNumber", String.valueOf(sdecisionMakerNumber.getText()));
+                        params.put("middleMan", String.valueOf(smiddleMan.getText()));
+                        params.put("consultant", String.valueOf(sconsultant.getText()));
+                        params.put("finance", String.valueOf(sfinance.getText()));
+                        params.put("possibleRequirement", String.valueOf(spossibleRequirement.getText()));
+                        params.put("remarks", String.valueOf(sremarks.getText()));
+                        params.put("industry", "Alur Dom");
+                        params.put("addressType", "Zonal");
+                        params.put("clientType", "Existing");
+                        params.put("userlogin", "S-001");
+                        return params;
+                    }
+                };
+                requestQueue.add(sendUpdateData);
+            }
+        });
     }
 }

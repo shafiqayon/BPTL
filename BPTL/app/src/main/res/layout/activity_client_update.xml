@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +13,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ayon.rahman.shafiqur.bptl.clientViewDetails">
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Client Details View"
@@ -133,13 +137,24 @@
         android:layout_below="@+id/EditText15"
         android:layout_alignParentLeft="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/EditText16"
+        android:layout_alignParentLeft="true"
+        android:text="This is label for text view" />
+
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/EditText17"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/EditText16"
+        android:layout_below="@+id/tv"
         android:layout_alignParentLeft="true" />
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -148,4 +163,14 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText17"
         android:layout_alignParentLeft="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/update"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/EditText18"
+        android:layout_alignParentLeft="true"
+        android:text="Update" />
 </RelativeLayout>
+</ScrollView>

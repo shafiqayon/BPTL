@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -78,12 +77,12 @@ public class clientView extends AppCompatActivity {
                                 alBuilder.setButton(DialogInterface.BUTTON2, "Edit", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-//                                        Intent i = new Intent(clientView.this, clientUpdate.class);
-//                                        i.putExtra("item", companyarray.get(position));
-//                                        startActivity(i);
+                                        Intent i = new Intent(clientView.this, clientUpdate.class);
+                                        i.putExtra("item", companyarray.get(position));
+                                        startActivity(i);
 
 
-                                        Toast.makeText(getApplicationContext(), "Edit Option Coming Soon", Toast.LENGTH_SHORT).show();
+                                      /*  Toast.makeText(getApplicationContext(), "Edit Option Coming Soon", Toast.LENGTH_SHORT).show();*/
                                     }
                                 });
 
