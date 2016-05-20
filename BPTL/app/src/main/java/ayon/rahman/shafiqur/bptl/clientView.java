@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -112,5 +113,23 @@ public class clientView extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
+    }
+    /*@Override
+     public void onRestart() {
+        super.onRestart();
+        adapter.notifyDataSetChanged();
+        Toast.makeText(getApplicationContext(),"Refreshing Restart", Toast.LENGTH_SHORT).show();
+        //When BACK BUTTON is pressed, the activity on the stack is restarted
+        //Do what you want on the refresh procedure here
+    }*/
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(getApplicationContext(), "Refreshing List", Toast.LENGTH_SHORT).show();
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+
     }
 }

@@ -23,7 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class clientUpdate extends AppCompatActivity {
-    String clientName = "empty", serverAddressfordata = "http://103.229.84.171/clientUpdateView.php", serverAddressforupdate = "http://103.229.84.171/clientUpdate.php";
+    String serverAddressfordata = "http://103.229.84.171/clientUpdateView.php", serverAddressforupdate = "http://103.229.84.171/clientUpdate.php";
+    String clientName = null;
     String website, contactPerson, phone, address, email, officephone, clientType, industryname,
             decisionMaker, decisionMakerNumber, middleMan, consultant, finance, possibleRequirement, remarks;
     EditText sclientName, swebsite, scontactPerson, sphone, saddress, semail, sofficephone, sclientType, sindustryname,
@@ -72,17 +73,17 @@ public class clientUpdate extends AppCompatActivity {
 //
 //                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     String clientNameget;
-                    sclientName.setText("Client Name : " + (String) jsonObject.get("CLIENT_NAME"));
+                    sclientName.setText((String) jsonObject.get("CLIENT_NAME"));
 
                     if (jsonObject.isNull("WEB_ADDRESS") == false) {
-                        swebsite.setText("Web Address : " + (String) jsonObject.get("WEB_ADDRESS"));
+                        swebsite.setText((String) jsonObject.get("WEB_ADDRESS"));
                     } else {
                         swebsite.setText("No Data for website");
                     }
 
 
                     if (jsonObject.isNull("INDUSTRY_NAME") == false) {
-                        sindustryname.setText("Industry Name : " + (String) jsonObject.get("INDUSTRY_NAME"));
+                        sindustryname.setText((String) jsonObject.get("INDUSTRY_NAME"));
                     } else {
                         sindustryname.setText("No Data  for industry");
                     }
@@ -91,9 +92,9 @@ public class clientUpdate extends AppCompatActivity {
                     if (jsonObject.isNull("CLIENT_TYPE") == false) {
                         String temp = (String) jsonObject.get("CLIENT_TYPE");
                         if (temp.equals("P")) {
-                            sclientType.setText("Client Type : Existing");
+                            sclientType.setText("Existing");
                         } else if (temp.equals("E")) {
-                            sclientType.setText("Client Type : Preceding");
+                            sclientType.setText("Preceding");
                         }
 
                     } else {
@@ -102,35 +103,35 @@ public class clientUpdate extends AppCompatActivity {
 
 
                     if (jsonObject.isNull("CONTACT_PERSON") == false) {
-                        scontactPerson.setText("Contact Person : " + (String) jsonObject.get("CONTACT_PERSON"));
+                        scontactPerson.setText((String) jsonObject.get("CONTACT_PERSON"));
                     } else {
                         scontactPerson.setText("No Data  for Contact Person");
                     }
 
 
                     if (jsonObject.isNull("ADDRESS_LINE_1") == false) {
-                        saddress.setText("Address Line : " + (String) jsonObject.get("ADDRESS_LINE_1"));
+                        saddress.setText((String) jsonObject.get("ADDRESS_LINE_1"));
                     } else {
                         saddress.setText("No Data  for Address");
                     }
 
 
                     if (jsonObject.isNull("CONT_NUMBER") == false) {
-                        sphone.setText("Contact Number : " + (String) jsonObject.get("CONT_NUMBER"));
+                        sphone.setText((String) jsonObject.get("CONT_NUMBER"));
                     } else {
-                        sphone.setText("No Data  for Contact Number");
+                        sphone.setText("0000000");
                     }
 
 
                     if (jsonObject.isNull("OFFICE_PHONE") == false) {
-                        sofficephone.setText("Office Phone : " + (String) jsonObject.get("OFFICE_PHONE"));
+                        sofficephone.setText((String) jsonObject.get("OFFICE_PHONE"));
                     } else {
-                        sofficephone.setText("No Data  for Office Phone");
+                        sofficephone.setText("0000000");
                     }
 
 
                     if (jsonObject.isNull("EMAIL") == false) {
-                        semail.setText("Email : " + (String) jsonObject.get("EMAIL"));
+                        semail.setText((String) jsonObject.get("EMAIL"));
                     } else {
                         semail.setText("No Data  for Email");
                     }
@@ -138,53 +139,53 @@ public class clientUpdate extends AppCompatActivity {
 
                     if (jsonObject.isNull("DECISION_MAKER") == false) {
 
-                        sdecisionMaker.setText("Decision Maker : " + (String) jsonObject.get("DECISION_MAKER"));
+                        sdecisionMaker.setText((String) jsonObject.get("DECISION_MAKER"));
                     } else {
                         sdecisionMaker.setText("No Data  for Decision Maker");
                     }
 
 
                     if (jsonObject.isNull("DEC_NUMBER") == false) {
-                        sdecisionMakerNumber.setText("Decision Maker Number : " + (String) jsonObject.get("DEC_NUMBER"));
+                        sdecisionMakerNumber.setText((String) jsonObject.get("DEC_NUMBER"));
                     } else {
-                        sdecisionMakerNumber.setText("No Data  for Decision Maker phone number");
+                        sdecisionMakerNumber.setText("0000000");
                     }
 
 
                     if (jsonObject.isNull("MIDDLE_MAN") == false) {
-                        smiddleMan.setText("Middle Man : " + (String) jsonObject.get("MIDDLE_MAN"));
+                        smiddleMan.setText((String) jsonObject.get("MIDDLE_MAN"));
                     } else {
                         smiddleMan.setText("No Data  for Middle Man");
                     }
 
 
                     if (jsonObject.isNull("CONSULTANT") == false) {
-                        sconsultant.setText("Consultant : " + (String) jsonObject.get("CONSULTANT"));
+                        sconsultant.setText((String) jsonObject.get("CONSULTANT"));
                     } else {
                         sconsultant.setText("No Data  for Consultant");
                     }
 
 
                     if (jsonObject.isNull("FINANCE_FROM") == false) {
-                        sfinance.setText("Finance : " + (String) jsonObject.get("FINANCE_FROM"));
+                        sfinance.setText((String) jsonObject.get("FINANCE_FROM"));
                     } else {
                         sfinance.setText("No Data  for Finance");
                     }
 
 
                     if (jsonObject.isNull("REMARKS") == false) {
-                        sremarks.setText("Remarks : " + (String) jsonObject.get("REMARKS"));
+                        sremarks.setText((String) jsonObject.get("REMARKS"));
                     } else {
                         sremarks.setText("No Data  for Remarks");
                     }
 
 
                     if (jsonObject.isNull("POSSIBLE_REQUIRMENT") == false) {
-                        spossibleRequirement.setText("Possible Requirements : " + (String) jsonObject.get("POSSIBLE_REQUIRMENT"));
+                        spossibleRequirement.setText((String) jsonObject.get("POSSIBLE_REQUIRMENT"));
                     } else {
                         spossibleRequirement.setText("No Data  for Possible Requirements");
                     }
-                    Log.e("check", "this is what we get " + (String) jsonObject.get("CLIENT_NAME"));
+                    //Log.e("check", "this is what we get " + (String) jsonObject.get("CLIENT_NAME"));
 
 
 //                    }
@@ -251,6 +252,7 @@ public class clientUpdate extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
+                        params.put("clientNameU", String.valueOf(sclientName.getText()));
                         params.put("clientName", clientName);
                         params.put("website", String.valueOf(swebsite.getText()));
                         params.put("companyName", "Dim");
