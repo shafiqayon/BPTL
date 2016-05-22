@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -19,28 +23,42 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class clientUpdate extends AppCompatActivity {
     String serverAddressfordata = "http://103.229.84.171/clientUpdateView.php", serverAddressforupdate = "http://103.229.84.171/clientUpdate.php";
     String clientName = null;
-    String website, contactPerson, phone, address, email, officephone, clientType, industryname,
-            decisionMaker, decisionMakerNumber, middleMan, consultant, finance, possibleRequirement, remarks;
     EditText sclientName, swebsite, scontactPerson, sphone, saddress, semail, sofficephone, sclientType, sindustryname,
             sdecisionMaker, sdecisionMakerNumber, smiddleMan, sconsultant, sfinance, spossibleRequirement, sremarks;
     Button updateButton;
+    public String clientTypeJson = null, addessTypeJson, industryname;
     RequestQueue requestQueue;
+    private List<String> industryListforSpinner = new ArrayList<String>();
+    Spinner industrylistspinner, addresstype, ClientTypeSpinner;
+    ArrayAdapter<String> industryAdapter;
+    public String category = null, usernamepassed, selectedInSpinner = "nothing selected", industrySelected = null, addressTypeSelected = null, clientTypeSelected = null, selectedInSpinnerAddresstype = null, selectedInSpinnerClientType = null;
+    String[] clientType = new String[]{"Prospecting", "Existing"};
+    String temp, temp2, industryServerforspinner = "http://103.229.84.171/industryspinner.php";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_update);
         clientName = getIntent().getExtras().getString("item");
+        usernamepassed = getIntent().getExtras().getString("usernamepassed");
         Toast.makeText(clientUpdate.this, clientName, Toast.LENGTH_LONG).show();
         requestQueue = Volley.newRequestQueue(clientUpdate.this);
 
         updateButton = (Button) findViewById(R.id.update);
+
+
+        industrylistspinner = (Spinner) findViewById(R.id.industry);
+        addresstype = (Spinner) findViewById(R.id.addressType);
+        ClientTypeSpinner = (Spinner) findViewById(R.id.clientType);
 
 
         sclientName = (EditText) findViewById(R.id.EditText2);
@@ -84,6 +102,7 @@ public class clientUpdate extends AppCompatActivity {
 
                     if (jsonObject.isNull("INDUSTRY_NAME") == false) {
                         sindustryname.setText((String) jsonObject.get("INDUSTRY_NAME"));
+                        industryname = (String) jsonObject.get("INDUSTRY_NAME");
                     } else {
                         sindustryname.setText("No Data  for industry");
                     }
@@ -91,10 +110,16 @@ public class clientUpdate extends AppCompatActivity {
                     //client type
                     if (jsonObject.isNull("CLIENT_TYPE") == false) {
                         String temp = (String) jsonObject.get("CLIENT_TYPE");
+                        Log.e("json client", "converted json" + temp);
                         if (temp.equals("P")) {
-                            sclientType.setText("Existing");
-                        } else if (temp.equals("E")) {
+                            Log.e("Check", "converted json" + temp);
+                            clientTypeJson = null;
                             sclientType.setText("Preceding");
+                            clientTypeJson = "Preceding";
+                        } else if (temp.equals("E")) {
+                            clientTypeJson = null;
+                            sclientType.setText("Existing");
+                            clientTypeJson = "Existing";
                         }
 
                     } else {
@@ -185,6 +210,16 @@ public class clientUpdate extends AppCompatActivity {
                     } else {
                         spossibleRequirement.setText("No Data  for Possible Requirements");
                     }
+
+
+                    if (jsonObject.isNull("ADDRESS_TYPE") == false) {
+                        addessTypeJson = (String) jsonObject.get("ADDRESS_TYPE");
+                        Log.e("RESTApi", (String) jsonObject.get("ADDRESS_TYPE"));
+                        Log.e("RESTApi12", "address previous " + addessTypeJson);
+
+                    } else {
+
+                    }
                     //Log.e("check", "this is what we get " + (String) jsonObject.get("CLIENT_NAME"));
 
 
@@ -217,6 +252,113 @@ public class clientUpdate extends AppCompatActivity {
 
 
         requestQueue.add(stringRequest);
+
+        Log.e("RESTApi2", "address previous " + addessTypeJson);
+
+
+        //getting industry for spinner industry
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(industryServerforspinner, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        temp = null;
+                        JSONObject industry = (JSONObject) jsonArray.get(i);
+                        temp = (String) industry.get("INDUSTRY_NAME");
+
+                        industryListforSpinner.add(temp);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                industryAdapter = new ArrayAdapter<String>(clientUpdate.this, android.R.layout.simple_spinner_item, industryListforSpinner);
+                industryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                industrylistspinner.setAdapter(industryAdapter);
+
+                int industrySpinnerPosition = industryAdapter.getPosition(industryname);
+                Log.e("Industry from json", industryname);
+                Log.e("Industry Selected", String.valueOf(industrySpinnerPosition));
+                industrylistspinner.setSelection(industrySpinnerPosition);
+
+                industryAdapter.notifyDataSetChanged();
+
+                //addresstype spinner starts here
+                String[] addressTypeItems = new String[]{"Local Office ", "Head Office", "Factory", "Regional", "Zonal Office", "Other Address"};
+                //setting up the address type spinner
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(clientUpdate.this,
+                        android.R.layout.simple_spinner_item, addressTypeItems);
+                adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                addresstype.setAdapter(adapter2);
+                Log.e("RESTApi3", "address previous " + addessTypeJson);
+                int previouslySelectedAddressType = adapter2.getPosition(addessTypeJson);
+
+
+                addresstype.setSelection(previouslySelectedAddressType);
+
+                addresstype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("item", (String) parent.getItemAtPosition(position));
+                        selectedInSpinnerAddresstype = parent.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                //addresstype spinner ends here
+                //client Type Starts here
+
+
+                //setting up the client type spinner
+                ArrayAdapter<String> adapterforClientType = new ArrayAdapter<String>(clientUpdate.this, android.R.layout.simple_spinner_item, clientType);
+                adapterforClientType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                ClientTypeSpinner.setAdapter(adapterforClientType);
+                Log.e("Previously ", "Seelcted " + clientTypeJson);
+                int previouslySelectedClientType = adapterforClientType.getPosition(clientTypeJson);
+                ClientTypeSpinner.setSelection(previouslySelectedClientType);
+                ClientTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("item", (String) parent.getItemAtPosition(position));
+                        selectedInSpinnerClientType = parent.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                //clinet Type ends here
+
+
+                industrylistspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        // Log.e("item", (String) parent.getItemAtPosition(position));
+                        selectedInSpinner = parent.getItemAtPosition(position).toString();
+                       /* temp2 = String.valueOf(parent.getItemAtPosition(position));*/
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+
+
+        requestQueue.add(jsonArrayRequest);
+
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,10 +410,10 @@ public class clientUpdate extends AppCompatActivity {
                         params.put("finance", String.valueOf(sfinance.getText()));
                         params.put("possibleRequirement", String.valueOf(spossibleRequirement.getText()));
                         params.put("remarks", String.valueOf(sremarks.getText()));
-                        params.put("industry", "Alur Dom");
-                        params.put("addressType", "Zonal");
-                        params.put("clientType", "Existing");
-                        params.put("userlogin", "S-001");
+                        params.put("industry", selectedInSpinner);
+                        params.put("addressType", selectedInSpinnerAddresstype);
+                        params.put("clientType", selectedInSpinnerClientType);
+                        params.put("userlogin", usernamepassed);
                         return params;
                     }
                 };

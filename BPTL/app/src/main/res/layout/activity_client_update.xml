@@ -21,7 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="20dp"
-        android:textIsSelectable="false" />
+        android:textIsSelectable="false"
+        android:layout_marginBottom="50px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,7 +31,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText"
         android:layout_alignParentLeft="true"
-        android:text="Client Name" />
+        android:text="Client Name"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
@@ -38,7 +40,48 @@
         android:layout_height="wrap_content"
         android:id="@+id/EditText2"
         android:layout_below="@+id/tv1"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20px" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv1i"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/EditText2"
+        android:layout_alignParentLeft="true"
+        android:text="Client Type" />
+
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clientType"
+        android:layout_below="@+id/tv1i"
+        android:layout_centerHorizontal="true"
+        android:spinnerMode="dropdown"
+
+        android:layout_marginBottom="20px" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv1ie"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/clientType"
+        android:layout_alignParentLeft="true"
+        android:text="Industry Selection" />
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/industry"
+        android:spinnerMode="dropdown"
+        android:layout_below="@+id/tv1ie"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="20px" />
 
 
     <TextView
@@ -47,17 +90,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv2"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/EditText2"
+        android:layout_below="@+id/industry"
         android:layout_alignParentLeft="true"
-        android:text="Website" />
+        android:text="Website"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText3"
         android:layout_below="@+id/tv2"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,15 +111,17 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText3"
         android:layout_alignParentLeft="true"
-        android:text="Contact Person" />
+        android:text="Contact Person"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText4"
         android:layout_below="@+id/tv3"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,16 +130,37 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText4"
         android:layout_alignParentLeft="true"
-        android:text="Phone" />
-
+        android:text="Phone"
+        android:layout_marginBottom="20px" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText5"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/EditText4"
-        android:layout_toLeftOf="@+id/EditText" />
+        android:layout_below="@+id/tv4"
+        android:layout_marginBottom="20px" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvd4"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/EditText5"
+        android:layout_alignParentLeft="true"
+        android:text="Address Type" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addressType"
+        android:hint="Address Type"
+        android:spinnerMode="dropdown"
+        android:layout_below="@+id/tvd4"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginBottom="20px" />
 
 
     <TextView
@@ -100,17 +168,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv5"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/EditText5"
+        android:layout_below="@+id/addressType"
         android:layout_alignParentLeft="true"
-        android:text="Address" />
+        android:text="Address"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText6"
         android:layout_below="@+id/tv5"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -119,16 +189,18 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText6"
         android:layout_alignParentLeft="true"
-        android:text="e-M@il" />
+        android:text="e-M@il"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText7"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv6"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -137,16 +209,18 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText7"
         android:layout_alignParentLeft="true"
-        android:text="Office Phone" />
+        android:text="Office Phone"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText8"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv7"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -155,16 +229,18 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText8"
         android:layout_alignParentLeft="true"
-        android:text="Client Type" />
+        android:text="Client Type"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText9"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv8"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -173,15 +249,17 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText9"
         android:layout_alignParentLeft="true"
-        android:text="Industry Name" />
+        android:text="Industry Name"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText10"
         android:layout_below="@+id/tv9"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -190,16 +268,18 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText10"
         android:layout_alignParentLeft="true"
-        android:text="Decision Maker" />
+        android:text="Decision Maker"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText11"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv10"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
 
     <TextView
@@ -209,15 +289,17 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText11"
         android:layout_alignParentLeft="true"
-        android:text="Decision Maker Number" />
+        android:text="Decision Maker Number"
+        android:layout_marginBottom="20px" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText12"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv11"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
 
     <TextView
@@ -227,15 +309,17 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText12"
         android:layout_alignParentLeft="true"
-        android:text="Middle Man" />
+        android:text="Middle Man"
+        android:layout_marginBottom="20px" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText13"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv12"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
 
     <TextView
@@ -245,16 +329,18 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText13"
         android:layout_alignParentLeft="true"
-        android:text="Consultant" />
+        android:text="Consultant"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText14"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv13"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
 
     <TextView
@@ -264,15 +350,17 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText14"
         android:layout_alignParentLeft="true"
-        android:text="Finance" />
+        android:text="Finance"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText15"
         android:layout_below="@+id/tv14"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20px" />
 
 
     <TextView
@@ -282,16 +370,18 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText15"
         android:layout_alignParentLeft="true"
-        android:text="Possible Requirements" />
+        android:text="Possible Requirements"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText16"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv15"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -300,16 +390,18 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText16"
         android:layout_alignParentLeft="true"
-        android:text="Remarks" />
+        android:text="Remarks"
+        android:layout_marginBottom="20px" />
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/EditText17"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20px" />
 
 
 
@@ -321,6 +413,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditText17"
         android:layout_alignParentLeft="true"
-        android:text="Update" />
+        android:text="Update"
+        android:layout_marginBottom="20px" />
 </RelativeLayout>
 </ScrollView>

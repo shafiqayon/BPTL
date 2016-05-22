@@ -80,6 +80,7 @@ public class clientView extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent i = new Intent(clientView.this, clientUpdate.class);
                                         i.putExtra("item", companyarray.get(position));
+                                        i.putExtra("usernamepassed", usernamepassed);
                                         startActivity(i);
 
 
