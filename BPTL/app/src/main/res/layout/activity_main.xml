@@ -50,4 +50,16 @@
         android:layout_marginTop="39dp"
         android:background="#FF6B71"
         android:textColor="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/appby"
+        android:id="@+id/textView21"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="8dp" />
 </RelativeLayout>

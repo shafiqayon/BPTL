@@ -24,7 +24,9 @@
         <activity android:name=".clientView" />
         <activity android:name=".alerttest" />
         <activity android:name=".clientViewDetails" />
-        <activity android:name=".clientUpdate"></activity>
+        <activity android:name=".clientUpdate" />
+        <activity android:name=".clientViewByDate" />
+        <activity android:name=".workviewbydatebetween"></activity>
     </application>
 
 </manifest>

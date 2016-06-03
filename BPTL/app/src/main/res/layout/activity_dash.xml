@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ayon.rahman.shafiqur.bptl.dash"
-    android:background="@drawable/lion">
+    android:background="@drawable/lion"
+    android:gravity="center">
 
     <Button
         android:layout_width="fill_parent"
@@ -41,7 +42,30 @@
         android:layout_below="@+id/dailywork"
         android:layout_alignParentStart="true"
         android:background="#AF4F8F"
+        android:layout_marginTop="40dp"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="Daily Work Program View"
+        android:id="@+id/datepicker"
+        android:layout_below="@+id/clientview"
+        android:layout_centerHorizontal="true"
+        android:background="#AF4F8F"
         android:layout_marginTop="20dp"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/appby"
+        android:id="@+id/textView20"
+        android:textSize="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:textColor="#ffffff" />
 
 </RelativeLayout>
