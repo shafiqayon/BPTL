@@ -1,6 +1,7 @@
 package ayon.rahman.shafiqur.bptl;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -57,13 +58,14 @@ public class dailyworkprogram extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dailyworkprogram);
         usernamepassed = getIntent().getExtras().getString("username");
-       /* Toast.makeText(dailyworkprogram.this, "User name passed in daily work :" + usernamepassed, Toast.LENGTH_SHORT).show();*/
+
+
         starttime = (Button) findViewById(R.id.startTimeBtn);
         endtime = (Button) findViewById(R.id.endButton);
         startTV = (TextView) findViewById(R.id.startTimetextView);
         endTV = (TextView) findViewById(R.id.endTimetextView);
         Remarks = (EditText) findViewById(R.id.remarks);
-      
+
         workstationnamespinner = (Spinner) findViewById(R.id.ws);
         mediumoftransportspinner = (Spinner) findViewById(R.id.mot);
         clientSpinner = (Spinner) findViewById(R.id.clientNameInSpinner);
@@ -320,6 +322,8 @@ public class dailyworkprogram extends AppCompatActivity {
                 };
                 requestQueue.add(stringRequest);
                 Toast.makeText(dailyworkprogram.this, "Data Saved", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(dailyworkprogram.this, dash.class);
+                startActivity(i);
             }
 
         });

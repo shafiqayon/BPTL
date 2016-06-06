@@ -1,5 +1,6 @@
 package ayon.rahman.shafiqur.bptl;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -7,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,11 +25,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class workviewbydatebetween extends AppCompatActivity {
-    String startDatePassed, endDatePassed, CLIENT_NAME, ENTER_DATE, usernamepassed;
+    String startDatePassed, endDatePassed, CLIENT_NAME, CLIENT_ID, ENTER_DATE, PRE_JOB_REF_NO, usernamepassed;
     RequestQueue requestQueue;
     String gettingClientNames = "http://103.229.84.171/clientnamebetween.php";
     public ArrayList<String> clientArray = new ArrayList<String>();
     public ArrayList<String> onlyClient = new ArrayList<String>();
+    public ArrayList<String> clientIdArray = new ArrayList<String>();
+    public ArrayList<String> PRE_JOB_REF_NOArray = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     ListView listView;
 
@@ -56,8 +58,12 @@ public class workviewbydatebetween extends AppCompatActivity {
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                         CLIENT_NAME = (String) jsonObject.get("CLIENT_NAME");
                         ENTER_DATE = (String) jsonObject.get("ENTER_DT");
+                        CLIENT_ID = (String) jsonObject.get("CLIENT_ID");
+                        PRE_JOB_REF_NO = (String) jsonObject.get("PRE_JOB_REF_NO");
                         clientArray.add(CLIENT_NAME + "\nOn Date : " + ENTER_DATE);
                         onlyClient.add(CLIENT_NAME);
+                        clientIdArray.add(CLIENT_ID);
+                        PRE_JOB_REF_NOArray.add(PRE_JOB_REF_NO);
 
                         final String[] client = clientArray.toArray(new String[clientArray.size()]);
                         adapter = new ArrayAdapter<String>(workviewbydatebetween.this, R.layout.custom_textview, client);
@@ -65,7 +71,10 @@ public class workviewbydatebetween extends AppCompatActivity {
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Toast.makeText(workviewbydatebetween.this, onlyClient.get(position), Toast.LENGTH_LONG).show();
+                               /* Toast.makeText(workviewbydatebetween.this, onlyClient.get(position) + "id : \n"+clientIdArray.get(position)+"Ref no \n"+PRE_JOB_REF_NOArray.get(position), Toast.LENGTH_LONG).show();*/
+                                Intent i = new Intent(workviewbydatebetween.this, workupdateentry.class);
+                                i.putExtra("refno", PRE_JOB_REF_NOArray.get(position));
+                                startActivity(i);
                             }
                         });
                     }

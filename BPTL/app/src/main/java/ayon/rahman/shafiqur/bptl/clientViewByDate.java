@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,7 +46,7 @@ public class clientViewByDate extends AppCompatActivity {
                                                   int monthOfYear, int dayOfMonth) {
                                 String dateString = formatDate(year, monthOfYear, dayOfMonth);
                                 startDateString = dateString;
-                                Toast.makeText(clientViewByDate.this, "Inside End date", Toast.LENGTH_SHORT).show();
+                               /* Toast.makeText(clientViewByDate.this, "Inside End date", Toast.LENGTH_SHORT).show();*/
                                 startTV.setText("Selected Start Date : " + dateString);
                               /*  Toast.makeText(clientViewByDate.this, dateString, Toast.LENGTH_SHORT).show();*/
 
@@ -70,7 +69,7 @@ public class clientViewByDate extends AppCompatActivity {
                 DatePickerDialog enddpd = new DatePickerDialog(clientViewByDate.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Toast.makeText(clientViewByDate.this, "Inside End date", Toast.LENGTH_SHORT).show();
+
                         String dateString = formatDate(year, monthOfYear, dayOfMonth);
                         endDateString = dateString;
                         endTV.setText("Selected End Date: " + dateString);

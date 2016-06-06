@@ -1,5 +1,6 @@
 package ayon.rahman.shafiqur.bptl;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -232,6 +233,10 @@ public class Client_Setup extends AppCompatActivity {
                     }
                 };
                 requestQueue.add(stringRequest);
+//not able to enter same thing again
+                Intent i = new Intent(Client_Setup.this, clientView.class);
+                startActivity(i);
+
             }
         });
 

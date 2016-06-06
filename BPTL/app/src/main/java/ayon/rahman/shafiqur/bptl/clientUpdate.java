@@ -1,5 +1,6 @@
 package ayon.rahman.shafiqur.bptl;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,7 +50,7 @@ public class clientUpdate extends AppCompatActivity {
         setContentView(R.layout.activity_client_update);
         clientName = getIntent().getExtras().getString("item");
         usernamepassed = getIntent().getExtras().getString("usernamepassed");
-        Toast.makeText(clientUpdate.this, clientName, Toast.LENGTH_LONG).show();
+     /*   Toast.makeText(clientUpdate.this, clientName, Toast.LENGTH_LONG).show();*/
         requestQueue = Volley.newRequestQueue(clientUpdate.this);
 
         updateButton = (Button) findViewById(R.id.update);
@@ -363,6 +363,7 @@ public class clientUpdate extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 StringRequest sendUpdateData = new StringRequest(Request.Method.POST, serverAddressforupdate, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -381,8 +382,8 @@ public class clientUpdate extends AppCompatActivity {
                         }
                         ;
 
-                        Toast.makeText(clientUpdate.this, "webiste: - > " + swebsite.getText() + sclientName.getText() + sclientType.getText() + sconsultant.getText() + sphone.getText() + spossibleRequirement.getText() + sremarks.getText(), Toast.LENGTH_SHORT).show();
-                        ;
+                      /*  Toast.makeText(clientUpdate.this, "webiste: - > " + swebsite.getText() + sclientName.getText() + sclientType.getText() + sconsultant.getText() + sphone.getText() + spossibleRequirement.getText() + sremarks.getText(), Toast.LENGTH_SHORT).show();*/
+
                     }
 
                 }, new Response.ErrorListener() {
@@ -418,6 +419,10 @@ public class clientUpdate extends AppCompatActivity {
                     }
                 };
                 requestQueue.add(sendUpdateData);
+
+//added for - not entering same thing again
+                Intent i = new Intent(clientUpdate.this, clientView.class);
+                startActivity(i);
             }
         });
     }
