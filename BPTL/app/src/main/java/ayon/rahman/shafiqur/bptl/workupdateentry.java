@@ -1,5 +1,6 @@
 package ayon.rahman.shafiqur.bptl;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,30 +27,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class workupdateentry extends AppCompatActivity {
 
+    public long endh, endm, starth, startm;
+    public int endmonth, enddate, endyear, startmonth, startdate, startyear;
     Button starttime, endtime;
     TextView startTV, endTV;
     EditText Remarks, hourset;
-
     String[] servicenamearray;
     Spinner workstationnamespinner, mediumoftransportspinner, clientSpinner, servicenamespinner;
-
-
-    String sworkstationnamespinner, smediumoftransportspinner, sclientSpinner, sservicenamespinner, sstarttime, sendtime, sPRE_JOB_REF_NO, sclientId, mot, wsCode, jobid;
-
-
+    String sworkstationnamespinner, smediumoftransportspinner, sclientSpinner, sremarks, sstarttime, sendtime, sPRE_JOB_REF_NO, sclientId, mot, wsCode, jobid;
     String selectedworkspinner, PRE_JOB_REF_NO, selectedmot, refNoPassed, usernamepassed, serverdailywork = "http://103.229.84.171/dailywork.php",
             serviceselected = "", servernameforservice = "http://103.229.84.171/service.php",
             sernameforclientinfo = "http://103.229.84.171/clientnametoworkid.php", clients = "", clientselected = "", clientselectedid = "",
-            temp = null, temp2 = null, servernameforwork = "http://103.229.84.171/wsnamesid.php";
-    String previousDate = "http://103.229.84.171/updateDataShow.php";
+            temp = null, temp2 = null, servernameforwork = "http://103.229.84.171/wsnamesid.php", previousDate = "http://103.229.84.171/updateDataShow.php", updateServer = "http://103.229.84.171/workEntryUpdate.php";
     ArrayAdapter<String> clientAdapter, serviceNameAdapter;
-    public long endh, endm, starth, startm;
-    public int endmonth, enddate, endyear, startmonth, startdate, startyear;
     long startmil;
     Button savebutton;
     RequestQueue requestQueue;
@@ -69,6 +68,7 @@ public class workupdateentry extends AppCompatActivity {
         startTV = (TextView) findViewById(R.id.startTimetextViewu);
         endTV = (TextView) findViewById(R.id.endTimetextViewu);
         Remarks = (EditText) findViewById(R.id.remarksu);
+        savebutton = (Button) findViewById(R.id.saveworku);
 
         workstationnamespinner = (Spinner) findViewById(R.id.wsu);
         mediumoftransportspinner = (Spinner) findViewById(R.id.motu);
@@ -107,16 +107,17 @@ public class workupdateentry extends AppCompatActivity {
 
                         }
                         if (jsonObject.isNull("REMARKS") == false) {
-                            Log.e("REMARKS", String.valueOf(jsonObject.get("REMARKS")));
+                            sremarks = String.valueOf(jsonObject.get("REMARKS"));
+                            Remarks.setText(sremarks);
                         } else {
 
                         }
                         if (jsonObject.isNull("START_TIME") == false) {
-                            startTV.setText((String) jsonObject.get("START_TIME"));
-                       /* startTV.setText("Could nt find Start");*/
-                            Log.e("START_TIME", String.valueOf(jsonObject.get("START_TIME")));
+                            sstarttime = (String) jsonObject.get("START_TIME");
+                            startTV.setText(sstarttime);
+
                         } else {
-                            startTV.setText("Could nt find Start");
+                            startTV.setText("Could not find Start Time");
                         }
                         if (jsonObject.isNull("MOT") == false) {
                             Log.e("MOT", String.valueOf(jsonObject.get("MOT")));
@@ -152,11 +153,12 @@ public class workupdateentry extends AppCompatActivity {
 
                         }
                         if (jsonObject.isNull("END_TIME") == false) {
-                            endTV.setText((String) jsonObject.get("END_TIME"));
-                      /*  endTV.setText("Could nt find end");*/
+
+                            sendtime = (String) jsonObject.get("END_TIME");
+                            endTV.setText(sendtime);
                             Log.e("END_TIME", String.valueOf(jsonObject.get("END_TIME")));
                         } else {
-                            endTV.setText("Could nt find end");
+                            endTV.setText("Could not find end time");
                         }
                     }
 
@@ -339,6 +341,108 @@ public class workupdateentry extends AppCompatActivity {
 
         requestQueue.add(jsonArrayRequestworkstation);
         requestQueue.add(jsonArrayRequest);
+
+
+        starttime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(workupdateentry.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        starth = hourOfDay;
+                        startm = minute;
+                        sstarttime = hourOfDay + ":" + minute;
+                        startTV.setText(sstarttime);
+
+                    }
+                }, hour, minute, false);
+                timePickerDialog.setTitle("Select Start Time");
+                timePickerDialog.show();
+            }
+        });
+
+        endtime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(workupdateentry.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        endh = hourOfDay;
+                        endm = minute;
+                        sendtime = hourOfDay + ":" + minute;
+                        endTV.setText(sendtime);
+                        startmil = (TimeUnit.HOURS.toMillis(endh) + TimeUnit.MINUTES.toMillis(endm)) - (TimeUnit.HOURS.toMillis(starth) + TimeUnit.MINUTES.toMillis(startm));
+                        Toast.makeText(workupdateentry.this, "Time Duration " + TimeUnit.MILLISECONDS.toMinutes(startmil) / 60 + ":" + TimeUnit.MILLISECONDS.toMinutes(startmil) % 60, Toast.LENGTH_LONG).show();
+
+                    }
+                }, hour, minute, false);
+                timePickerDialog.setTitle("Select End Time");
+                timePickerDialog.show();
+
+
+            }
+        });
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(workupdateentry.this, "Client Selected" + clientselected + " Service Type " + serviceselected
+                        + " Start Time " + sstarttime + " End Time" + sendtime + " MOT " + selectedmot + "work station " + selectedworkspinner, Toast.LENGTH_LONG).show();
+                Log.e("Send", "Client Selected" + clientselected + " Service Type " + serviceselected
+                        + " Start Time " + sstarttime + " End Time" + sendtime + " MOT " + selectedmot + " work station " + selectedworkspinner + " Remarks " +
+                        "" + sremarks + " Reference no" + refNoPassed);
+
+                //sending volley post data to server for update
+
+                sremarks = String.valueOf(Remarks.getText());
+                StringRequest udpate = new StringRequest(Request.Method.POST, updateServer, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Reply ", "From server " + response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", " preset data" + error.toString());
+                    }
+                }
+
+                ) {/*
+                    $clientName = $_POST['clientName'];
+                    $servicename = $_POST['servicename'];
+                    $startT = $_POST['startTime'];
+                    $endT = $_POST['endTime'];
+                    $mot = $_POST['mot'];
+                    $workstationname = $_POST['wsname'];
+                    $remarks = $_POST['remarks'];
+                    $referenceNo = $_POST['referenceNo'];*/
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("clientName", clientselected);
+                        params.put("servicename", serviceselected);
+                        params.put("startTime", sstarttime);
+                        params.put("endTime", sendtime);
+                        params.put("mot", selectedmot);
+                        params.put("wsname", selectedworkspinner);
+                        params.put("remarks", sremarks);
+                        params.put("referenceNo", refNoPassed);
+                        return params;
+                    }
+                };
+
+                requestQueue.add(udpate);
+            }
+
+        });
 
     } // end of on create
 }

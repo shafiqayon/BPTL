@@ -235,6 +235,7 @@ public class Client_Setup extends AppCompatActivity {
                 requestQueue.add(stringRequest);
 //not able to enter same thing again
                 Intent i = new Intent(Client_Setup.this, clientView.class);
+                i.putExtra("username", usernamepassed);
                 startActivity(i);
 
             }

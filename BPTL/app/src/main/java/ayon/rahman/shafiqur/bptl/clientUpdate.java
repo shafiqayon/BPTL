@@ -29,20 +29,19 @@ import java.util.List;
 import java.util.Map;
 
 public class clientUpdate extends AppCompatActivity {
+    public String clientTypeJson = null, addessTypeJson, industryname;
+    public String category = null, usernamepassed, selectedInSpinner = "nothing selected", industrySelected = null, addressTypeSelected = null, clientTypeSelected = null, selectedInSpinnerAddresstype = null, selectedInSpinnerClientType = null;
     String serverAddressfordata = "http://103.229.84.171/clientUpdateView.php", serverAddressforupdate = "http://103.229.84.171/clientUpdate.php";
     String clientName = null;
     EditText sclientName, swebsite, scontactPerson, sphone, saddress, semail, sofficephone, sclientType, sindustryname,
             sdecisionMaker, sdecisionMakerNumber, smiddleMan, sconsultant, sfinance, spossibleRequirement, sremarks;
     Button updateButton;
-    public String clientTypeJson = null, addessTypeJson, industryname;
     RequestQueue requestQueue;
-    private List<String> industryListforSpinner = new ArrayList<String>();
     Spinner industrylistspinner, addresstype, ClientTypeSpinner;
     ArrayAdapter<String> industryAdapter;
-    public String category = null, usernamepassed, selectedInSpinner = "nothing selected", industrySelected = null, addressTypeSelected = null, clientTypeSelected = null, selectedInSpinnerAddresstype = null, selectedInSpinnerClientType = null;
     String[] clientType = new String[]{"Prospecting", "Existing"};
     String temp, temp2, industryServerforspinner = "http://103.229.84.171/industryspinner.php";
-
+    private List<String> industryListforSpinner = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -417,6 +416,7 @@ public class clientUpdate extends AppCompatActivity {
 
 //added for - not entering same thing again
                 Intent i = new Intent(clientUpdate.this, clientView.class);
+                i.putExtra("username", usernamepassed);
                 startActivity(i);
             }
         });

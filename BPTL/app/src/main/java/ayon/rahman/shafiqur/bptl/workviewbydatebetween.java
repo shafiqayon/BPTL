@@ -1,7 +1,9 @@
 package ayon.rahman.shafiqur.bptl;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,13 +27,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class workviewbydatebetween extends AppCompatActivity {
-    String startDatePassed, endDatePassed, CLIENT_NAME, CLIENT_ID, ENTER_DATE, PRE_JOB_REF_NO, usernamepassed;
-    RequestQueue requestQueue;
-    String gettingClientNames = "http://103.229.84.171/clientnamebetween.php";
     public ArrayList<String> clientArray = new ArrayList<String>();
     public ArrayList<String> onlyClient = new ArrayList<String>();
     public ArrayList<String> clientIdArray = new ArrayList<String>();
     public ArrayList<String> PRE_JOB_REF_NOArray = new ArrayList<String>();
+    String startDatePassed, endDatePassed, CLIENT_NAME, CLIENT_ID, ENTER_DATE, PRE_JOB_REF_NO, usernamepassed;
+    RequestQueue requestQueue;
+    String gettingClientNames = "http://103.229.84.171/clientnamebetween.php";
     ArrayAdapter<String> adapter;
     ListView listView;
 
@@ -49,6 +51,41 @@ public class workviewbydatebetween extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.e("Response ", response);
+                if (response.isEmpty() || response.equals("[]")) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(workviewbydatebetween.this);
+                    alertDialogBuilder.setMessage("No Records Found ");
+
+                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            Intent i = new Intent(workviewbydatebetween.this, clientViewByDate.class);
+                            i.putExtra("username", usernamepassed);
+                            startActivity(i);
+                        }
+                    });
+
+                     /* alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });*/
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+                  /*  Toast.makeText(workviewbydatebetween.this,"No Records Found ",Toast.LENGTH_LONG).show();
+                    Toast.makeText(workviewbydatebetween.this,"No Records Found ",Toast.LENGTH_LONG).show();
+                    Toast.makeText(workviewbydatebetween.this,"No Records Found ",Toast.LENGTH_LONG).show();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Intent i = new Intent(workviewbydatebetween.this, clientViewByDate.class);
+                    i.putExtra("username", usernamepassed);
+                    startActivity(i);*/
+                }
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = new JSONArray(response);

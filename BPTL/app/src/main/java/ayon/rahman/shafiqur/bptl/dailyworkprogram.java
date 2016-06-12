@@ -34,10 +34,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class dailyworkprogram extends AppCompatActivity {
-    private ArrayList<String> clientListForSpinner = new ArrayList<String>();
-    private ArrayList<String> workstationnamelistforspinner = new ArrayList<String>();
-    private ArrayList<ArrayList<String>> serviceName = new ArrayList<ArrayList<String>>();
-
+    public long endh, endm, starth, startm;
+    public int endmonth, enddate, endyear, startmonth, startdate, startyear;
     Button starttime, endtime;
     TextView startTV, endTV;
     EditText Remarks, hourset;
@@ -49,10 +47,12 @@ public class dailyworkprogram extends AppCompatActivity {
             sernameforclientinfo = "http://103.229.84.171/clientnametowork.php", clients = "", clientselected = "",
             temp = null, temp2 = null, servernameforwork = "http://103.229.84.171/wsnames.php";
     ArrayAdapter<String> clientAdapter, serviceNameAdapter;
-    public long endh, endm, starth, startm;
-    public int endmonth, enddate, endyear, startmonth, startdate, startyear;
     long startmil;
     Button savebutton;
+    private ArrayList<String> clientListForSpinner = new ArrayList<String>();
+    private ArrayList<String> workstationnamelistforspinner = new ArrayList<String>();
+    private ArrayList<ArrayList<String>> serviceName = new ArrayList<ArrayList<String>>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -318,7 +318,8 @@ public class dailyworkprogram extends AppCompatActivity {
                 };
                 requestQueue.add(stringRequest);
                 Toast.makeText(dailyworkprogram.this, "Data Saved", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(dailyworkprogram.this, dash.class);
+                Intent i = new Intent(dailyworkprogram.this, dailyworkprogram.class);
+                i.putExtra("username", usernamepassed);
                 startActivity(i);
             }
 
