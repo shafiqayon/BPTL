@@ -83,13 +83,8 @@ public class clientUpdate extends AppCompatActivity {
             public void onResponse(String response) {
                 JSONArray jsonArray = null;
                 try {
-//                    jsonArray = new JSONArray(response);
                     JSONObject jsonObject = new JSONObject(response);
                     Log.e("ClientUpdate Json", String.valueOf(jsonObject));
-//                    category = object.getString("status");
-//                    for (int i = 0; i < jsonArray.length(); i++) {
-//
-//                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     String clientNameget;
                     sclientName.setText((String) jsonObject.get("CLIENT_NAME"));
 

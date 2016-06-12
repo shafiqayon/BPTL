@@ -74,7 +74,7 @@ public class dailyworkprogram extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(dailyworkprogram.this);
 
         savebutton = (Button) findViewById(R.id.savework);
-
+        /*request for getting client list */
         StringRequest stringRequest = new StringRequest(Request.Method.POST, sernameforclientinfo, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -91,10 +91,6 @@ public class dailyworkprogram extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-              /*  Toast.makeText(dailyworkprogram.this, clients, Toast.LENGTH_LONG).show();*/
-
                 clientAdapter = new ArrayAdapter<String>(dailyworkprogram.this, android.R.layout.simple_spinner_item, clientListForSpinner);
                 clientAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 clientSpinner.setAdapter(clientAdapter);
