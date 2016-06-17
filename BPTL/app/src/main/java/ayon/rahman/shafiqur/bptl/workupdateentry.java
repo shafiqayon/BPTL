@@ -62,6 +62,8 @@ public class workupdateentry extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.workupdateentry);
         refNoPassed = getIntent().getExtras().getString("refno");
+
+
         requestQueue = Volley.newRequestQueue(workupdateentry.this);
         starttime = (Button) findViewById(R.id.startTimeBtnu);
         endtime = (Button) findViewById(R.id.endButtonu);
@@ -70,10 +72,8 @@ public class workupdateentry extends AppCompatActivity {
         Remarks = (EditText) findViewById(R.id.remarksu);
         savebutton = (Button) findViewById(R.id.saveworku);
 
-        workstationnamespinner = (Spinner) findViewById(R.id.wsu);
+
         mediumoftransportspinner = (Spinner) findViewById(R.id.motu);
-        clientSpinner = (Spinner) findViewById(R.id.clientNameInSpinneru);
-        servicenamespinner = (Spinner) findViewById(R.id.serviceNamespinneru);
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, previousDate, new Response.Listener<String>() {
@@ -97,14 +97,110 @@ public class workupdateentry extends AppCompatActivity {
                         if (jsonObject.isNull("CLIENT_ID") == false) {
                             Log.e("CLIENT_ID", String.valueOf(jsonObject.get("CLIENT_ID")));
                             sclientId = String.valueOf(jsonObject.get("CLIENT_ID"));
-                        } else {
+                            //client name spinner
+                            StringRequest stringRequestClient = new StringRequest(Request.Method.POST, sernameforclientinfo, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    JSONArray jsonArray = null;
+                                    try {
+                                        jsonArray = new JSONArray(response);
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            temp = null;
+                                            temp2 = null;
+                                            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                                            temp = (String) jsonObject.get("CLIENT_NAME");
+                                            clientListName.add(temp);
+                                            temp2 = (String) jsonObject.get("CLIENT_ID");
+                                            clientListId.add(temp2);
+                                        }
 
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    clientSpinner = (Spinner) findViewById(R.id.clientNameInSpinneru);
+                                    clientAdapter = new ArrayAdapter<String>(workupdateentry.this, android.R.layout.simple_spinner_item, clientListName);
+                                    clientAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    System.out.println("selection was" + clientAdapter.getPosition(clientListName.get(clientListId.indexOf(sclientId))));
+                                    clientSpinner.setAdapter(clientAdapter);
+                                    clientAdapter.notifyDataSetChanged();
+                                    clientSpinner.setSelection(clientAdapter.getPosition(clientListName.get(clientListId.indexOf(sclientId))));
+                                    clientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                            Log.e("item", (String) parent.getItemAtPosition(position));
+                                            clientselected = parent.getItemAtPosition(position).toString();
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> parent) {
+                                        }
+                                    });
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e("Volley E client ", error.toString());
+                                }
+                            }
+                            ) {
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("user", "S-001");
+                                    return params;
+                                }
+                            };
+                            requestQueue.add(stringRequestClient);
+                        } else {
                         }
                         if (jsonObject.isNull("JOB_ID") == false) {
                             Log.e("JOB_ID", String.valueOf(jsonObject.get("JOB_ID")));
                             jobid = String.valueOf(jsonObject.get("JOB_ID"));
-                        } else {
+                            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(servernameforservice, new Response.Listener<JSONArray>() {
+                                @Override
+                                public void onResponse(JSONArray jsonArray) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        try {
+                                            JSONObject object = (JSONObject) jsonArray.get(i);
+                                            temp = null;
+                                            temp2 = null;
+                                            temp = (String) object.get("JOB_ID");
+                                            temp2 = (String) object.get("JOB_NAME");
+                                            serviceName.add(temp2);
+                                            serviceNameId.add(temp);
 
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    //setting up the spinner
+                                    servicenamespinner = (Spinner) findViewById(R.id.serviceNamespinneru);
+                                    serviceNameAdapter = new ArrayAdapter<String>(workupdateentry.this, android.R.layout.simple_spinner_item, serviceName);
+                                    serviceNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    servicenamespinner.setAdapter(serviceNameAdapter);
+                                    serviceNameAdapter.notifyDataSetChanged();
+                                    servicenamespinner.setSelection(serviceNameAdapter.getPosition(serviceName.get(serviceNameId.indexOf(jobid))));
+                                    servicenamespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                            Log.e("service selected", (String) parent.getItemAtPosition(position));
+                                            serviceselected = parent.getItemAtPosition(position).toString();
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> parent) {
+                                        }
+                                    });
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+
+                                }
+                            });
+                            requestQueue.add(jsonArrayRequest);
+                        } else {
+                            jobid = "1";
                         }
                         if (jsonObject.isNull("REMARKS") == false) {
                             sremarks = String.valueOf(jsonObject.get("REMARKS"));
@@ -127,7 +223,6 @@ public class workupdateentry extends AppCompatActivity {
                             ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(workupdateentry.this, android.R.layout.simple_spinner_item, mots);
                             mediumoftransportspinner.setAdapter(adapter3);
                             adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
                             int previoslySelectedMot = adapter3.getPosition(mot);
                             Log.e("mot in spinner", "Medium Of Transport " + previoslySelectedMot);
                             mediumoftransportspinner.setSelection(previoslySelectedMot);
@@ -137,20 +232,57 @@ public class workupdateentry extends AppCompatActivity {
                                     Log.e("selectedmot", (String) parent.getItemAtPosition(position));
                                     selectedmot = parent.getItemAtPosition(position).toString();
                                 }
-
                                 @Override
                                 public void onNothingSelected(AdapterView<?> parent) {
                                 }
                             });
                         } else {
-
                         }
                         if (jsonObject.isNull("FWS_CODE") == false) {
                             Log.e("FWS_CODE", String.valueOf(jsonObject.get("FWS_CODE")));
                             wsCode = String.valueOf(jsonObject.get("FWS_CODE"));
+                            JsonArrayRequest jsonArrayRequestworkstation = new JsonArrayRequest(servernameforwork, new Response.Listener<JSONArray>() {
+                                @Override
+                                public void onResponse(JSONArray jsonArray) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        try {
+                                            temp = null;
+                                            temp2 = null;
+                                            JSONObject object = (JSONObject) jsonArray.get(i);
+                                            temp = object.getString("WS_NAME");
+                                            temp2 = object.getString("WS_CODE");
+                                            workstationnamelistforspinner.add(temp);
+                                            workstationidlistforspinner.add(temp2);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    //setting up the spinner for workstations
+                                    workstationnamespinner = (Spinner) findViewById(R.id.wsu);
+                                    ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(workupdateentry.this, android.R.layout.simple_spinner_item, workstationnamelistforspinner);
+                                    workstationnamespinner.setAdapter(adapter3);
+                                    adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    workstationnamespinner.setSelection(adapter3.getPosition(workstationnamelistforspinner.get(workstationidlistforspinner.indexOf(wsCode))));
+                                    workstationnamespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                            selectedworkspinner = parent.getItemAtPosition(position).toString();
+                                        }
 
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> parent) {
+                                        }
+                                    });
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    Log.e("ws error", volleyError.toString());
+                                }
+                            });
+                            requestQueue.add(jsonArrayRequestworkstation);
                         } else {
-
+                            wsCode = "Chi269";
                         }
                         if (jsonObject.isNull("END_TIME") == false) {
 
@@ -165,8 +297,6 @@ public class workupdateentry extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -174,7 +304,6 @@ public class workupdateentry extends AppCompatActivity {
                 Log.e("Volley Error", " preset data" + error.toString());
             }
         }
-
         ) {
             @Override
             protected Map<String, String> getParams() {
@@ -184,164 +313,6 @@ public class workupdateentry extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
-
-
-        //client name spinner
-        StringRequest stringRequestClient = new StringRequest(Request.Method.POST, sernameforclientinfo, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        temp = null;
-                        temp2 = null;
-                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                        temp = (String) jsonObject.get("CLIENT_NAME");
-                        clientListName.add(temp);
-                        temp2 = (String) jsonObject.get("CLIENT_ID");
-                        clientListId.add(temp2);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                clientAdapter = new ArrayAdapter<String>(workupdateentry.this, android.R.layout.simple_spinner_item, clientListName);
-                clientAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            /*    Log.e("id get", sclientId);*/
-
-                System.out.println("index of client" + clientListId.indexOf(sclientId));
-                System.out.println("index of client name " + clientListName.get(clientListId.indexOf(sclientId)));
-                System.out.println("index of client big " + clientAdapter.getPosition(clientListName.get(clientListId.indexOf(sclientId))));
-
-
-          /*      System.out.println("selection was"+clientAdapter.getPosition(clientListName.get(clientListId.indexOf(sclientId))));*/
-                clientSpinner.setAdapter(clientAdapter);
-                clientAdapter.notifyDataSetChanged();
-                clientSpinner.setSelection(clientAdapter.getPosition(clientListName.get(clientListId.indexOf(sclientId))));
-                clientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("item", (String) parent.getItemAtPosition(position));
-                        clientselected = parent.getItemAtPosition(position).toString();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Volley E client ", error.toString());
-            }
-        }
-        ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("user", "S-001");
-                return params;
-            }
-        };
-
-        requestQueue.add(stringRequestClient);
-
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(servernameforservice, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray jsonArray) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        JSONObject object = (JSONObject) jsonArray.get(i);
-                        temp = null;
-                        temp2 = null;
-                        temp = (String) object.get("JOB_ID");
-                        temp2 = (String) object.get("JOB_NAME");
-                        serviceName.add(temp2);
-                        serviceNameId.add(temp);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-                //setting up the spinner
-                serviceNameAdapter = new ArrayAdapter<String>(workupdateentry.this, android.R.layout.simple_spinner_item, serviceName);
-                serviceNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                servicenamespinner.setAdapter(serviceNameAdapter);
-              /* *//* serviceNameAdapter.notifyDataSetChanged();*//*
-                Log.e("Jiob id get", ""+jobid);
-                Log.e("Jiob id get in", ""+serviceName.get(serviceNameId.indexOf(jobid)));
-               *//* Log.e("Service code","Previously selected"+serviceNameAdapter.getPosition(serviceName.get(serviceNameId.indexOf(jobid))));*/
-                servicenamespinner.setSelection(serviceNameAdapter.getPosition(serviceName.get(serviceNameId.indexOf(jobid))));
-                servicenamespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("service selected", (String) parent.getItemAtPosition(position));
-                        serviceselected = parent.getItemAtPosition(position).toString();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        });
-        JsonArrayRequest jsonArrayRequestworkstation = new JsonArrayRequest(servernameforwork, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray jsonArray) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        temp = null;
-                        temp2 = null;
-                        JSONObject object = (JSONObject) jsonArray.get(i);
-                        temp = object.getString("WS_NAME");
-                        temp2 = object.getString("WS_CODE");
-                        workstationnamelistforspinner.add(temp);
-                        workstationidlistforspinner.add(temp2);
-                       /* Log.e("WS_NAME", temp);
-                        Log.e("ws_code", temp2);*/
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                //setting up the spinner for workstations
-                ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(workupdateentry.this, android.R.layout.simple_spinner_item, workstationnamelistforspinner);
-                workstationnamespinner.setAdapter(adapter3);
-                adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                /*clientAdapter.getPosition(clientListName.get(clientListId.indexOf(sclientId)))*/
-                workstationnamespinner.setSelection(adapter3.getPosition(workstationnamelistforspinner.get(workstationidlistforspinner.indexOf(wsCode))));
-                workstationnamespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("selectedworkspinner", (String) parent.getItemAtPosition(position));
-                        selectedworkspinner = parent.getItemAtPosition(position).toString();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.e("ws error", volleyError.toString());
-            }
-        });
-
-        requestQueue.add(jsonArrayRequestworkstation);
-        requestQueue.add(jsonArrayRequest);
-
 
         starttime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,7 +328,6 @@ public class workupdateentry extends AppCompatActivity {
                         startm = minute;
                         sstarttime = hourOfDay + ":" + minute;
                         startTV.setText(sstarttime);
-
                     }
                 }, hour, minute, false);
                 timePickerDialog.setTitle("Select Start Time");
@@ -371,8 +341,6 @@ public class workupdateentry extends AppCompatActivity {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
-
-
                 TimePickerDialog timePickerDialog = new TimePickerDialog(workupdateentry.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -382,7 +350,6 @@ public class workupdateentry extends AppCompatActivity {
                         endTV.setText(sendtime);
                         startmil = (TimeUnit.HOURS.toMillis(endh) + TimeUnit.MINUTES.toMillis(endm)) - (TimeUnit.HOURS.toMillis(starth) + TimeUnit.MINUTES.toMillis(startm));
                         Toast.makeText(workupdateentry.this, "Time Duration " + TimeUnit.MILLISECONDS.toMinutes(startmil) / 60 + ":" + TimeUnit.MILLISECONDS.toMinutes(startmil) % 60, Toast.LENGTH_LONG).show();
-
                     }
                 }, hour, minute, false);
                 timePickerDialog.setTitle("Select End Time");
@@ -394,8 +361,8 @@ public class workupdateentry extends AppCompatActivity {
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(workupdateentry.this, "Client Selected" + clientselected + " Service Type " + serviceselected
-                        + " Start Time " + sstarttime + " End Time" + sendtime + " MOT " + selectedmot + "work station " + selectedworkspinner, Toast.LENGTH_LONG).show();
+               /* Toast.makeText(workupdateentry.this, "Client Selected" + clientselected + " Service Type " + serviceselected
+                        + " Start Time " + sstarttime + " End Time" + sendtime + " MOT " + selectedmot + "work station " + selectedworkspinner, Toast.LENGTH_LONG).show();*/
                 Log.e("Send", "Client Selected" + clientselected + " Service Type " + serviceselected
                         + " Start Time " + sstarttime + " End Time" + sendtime + " MOT " + selectedmot + " work station " + selectedworkspinner + " Remarks " +
                         "" + sremarks + " Reference no" + refNoPassed);
@@ -415,15 +382,8 @@ public class workupdateentry extends AppCompatActivity {
                     }
                 }
 
-                ) {/*
-                    $clientName = $_POST['clientName'];
-                    $servicename = $_POST['servicename'];
-                    $startT = $_POST['startTime'];
-                    $endT = $_POST['endTime'];
-                    $mot = $_POST['mot'];
-                    $workstationname = $_POST['wsname'];
-                    $remarks = $_POST['remarks'];
-                    $referenceNo = $_POST['referenceNo'];*/
+                ) {
+
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
@@ -438,7 +398,6 @@ public class workupdateentry extends AppCompatActivity {
                         return params;
                     }
                 };
-
                 requestQueue.add(udpate);
             }
 
