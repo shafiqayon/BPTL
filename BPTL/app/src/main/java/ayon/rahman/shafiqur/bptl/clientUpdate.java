@@ -97,6 +97,58 @@ public class clientUpdate extends AppCompatActivity {
                     if (jsonObject.isNull("INDUSTRY_NAME") == false) {
                         sindustryname.setText((String) jsonObject.get("INDUSTRY_NAME"));
                         industryname = (String) jsonObject.get("INDUSTRY_NAME");
+                        //getting industry for spinner industry
+                        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(industryServerforspinner, new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray jsonArray) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    try {
+                                        temp = null;
+                                        JSONObject industry = (JSONObject) jsonArray.get(i);
+                                        temp = (String) industry.get("INDUSTRY_NAME");
+
+                                        industryListforSpinner.add(temp);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                industryAdapter = new ArrayAdapter<String>(clientUpdate.this, android.R.layout.simple_spinner_item, industryListforSpinner);
+                                industryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                industrylistspinner.setAdapter(industryAdapter);
+
+                                int industrySpinnerPosition = industryAdapter.getPosition(industryname);
+                                Log.e("Industry from json", industryname);
+                                Log.e("Industry Selected", String.valueOf(industrySpinnerPosition));
+                                industrylistspinner.setSelection(industrySpinnerPosition);
+
+                                industryAdapter.notifyDataSetChanged();
+
+
+                                industrylistspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        // Log.e("item", (String) parent.getItemAtPosition(position));
+                                        selectedInSpinner = parent.getItemAtPosition(position).toString();
+                                         /* temp2 = String.valueOf(parent.getItemAtPosition(position));*/
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+                                    }
+                                });
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+
+                            }
+                        });
+                        requestQueue.add(jsonArrayRequest);
+
+
+
+
                     } else {
                         sindustryname.setText("No Data  for industry");
                     }
@@ -110,11 +162,40 @@ public class clientUpdate extends AppCompatActivity {
                             clientTypeJson = null;
                             sclientType.setText("Preceding");
                             clientTypeJson = "Preceding";
+
+
                         } else if (temp.equals("E")) {
                             clientTypeJson = null;
                             sclientType.setText("Existing");
                             clientTypeJson = "Existing";
                         }
+
+                        //setting up the client type spinner
+                        ArrayAdapter<String> adapterforClientType = new ArrayAdapter<String>(clientUpdate.this, android.R.layout.simple_spinner_item, clientType);
+                        adapterforClientType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        ClientTypeSpinner.setAdapter(adapterforClientType);
+                        Log.e("Previously ", "Seelcted " + clientTypeJson);
+                        int previouslySelectedClientType = adapterforClientType.getPosition(clientTypeJson);
+                        ClientTypeSpinner.setSelection(previouslySelectedClientType);
+                        ClientTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                Log.e("item", (String) parent.getItemAtPosition(position));
+                                selectedInSpinnerClientType = parent.getItemAtPosition(position).toString();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+                        //clinet Type ends here
+
+
+
+
 
                     } else {
                         sclientType.setText("No Data  for Client Type");
@@ -210,6 +291,32 @@ public class clientUpdate extends AppCompatActivity {
                         addessTypeJson = (String) jsonObject.get("ADDRESS_TYPE");
                         Log.e("RESTApi", (String) jsonObject.get("ADDRESS_TYPE"));
                         Log.e("RESTApi12", "address previous " + addessTypeJson);
+                        //addresstype spinner starts here
+                        String[] addressTypeItems = new String[]{"Local Office ", "Head Office", "Factory", "Regional", "Zonal Office", "Other Address"};
+                        //setting up the address type spinner
+                        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(clientUpdate.this,
+                                android.R.layout.simple_spinner_item, addressTypeItems);
+                        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        addresstype.setAdapter(adapter2);
+                        Log.e("RESTApi3", "address previous " + addessTypeJson);
+                        int previouslySelectedAddressType = adapter2.getPosition(addessTypeJson);
+
+
+                        addresstype.setSelection(previouslySelectedAddressType);
+
+                        addresstype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                Log.e("item", (String) parent.getItemAtPosition(position));
+                                selectedInSpinnerAddresstype = parent.getItemAtPosition(position).toString();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+                        //addresstype spinner ends here
 
                     } else {
 
@@ -248,110 +355,6 @@ public class clientUpdate extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
         Log.e("RESTApi2", "address previous " + addessTypeJson);
-
-
-        //getting industry for spinner industry
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(industryServerforspinner, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray jsonArray) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        temp = null;
-                        JSONObject industry = (JSONObject) jsonArray.get(i);
-                        temp = (String) industry.get("INDUSTRY_NAME");
-
-                        industryListforSpinner.add(temp);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                industryAdapter = new ArrayAdapter<String>(clientUpdate.this, android.R.layout.simple_spinner_item, industryListforSpinner);
-                industryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                industrylistspinner.setAdapter(industryAdapter);
-
-                int industrySpinnerPosition = industryAdapter.getPosition(industryname);
-                Log.e("Industry from json", industryname);
-                Log.e("Industry Selected", String.valueOf(industrySpinnerPosition));
-                industrylistspinner.setSelection(industrySpinnerPosition);
-
-                industryAdapter.notifyDataSetChanged();
-
-                //addresstype spinner starts here
-                String[] addressTypeItems = new String[]{"Local Office ", "Head Office", "Factory", "Regional", "Zonal Office", "Other Address"};
-                //setting up the address type spinner
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(clientUpdate.this,
-                        android.R.layout.simple_spinner_item, addressTypeItems);
-                adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                addresstype.setAdapter(adapter2);
-                Log.e("RESTApi3", "address previous " + addessTypeJson);
-                int previouslySelectedAddressType = adapter2.getPosition(addessTypeJson);
-
-
-                addresstype.setSelection(previouslySelectedAddressType);
-
-                addresstype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("item", (String) parent.getItemAtPosition(position));
-                        selectedInSpinnerAddresstype = parent.getItemAtPosition(position).toString();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-                //addresstype spinner ends here
-                //client Type Starts here
-
-
-                //setting up the client type spinner
-                ArrayAdapter<String> adapterforClientType = new ArrayAdapter<String>(clientUpdate.this, android.R.layout.simple_spinner_item, clientType);
-                adapterforClientType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                ClientTypeSpinner.setAdapter(adapterforClientType);
-                Log.e("Previously ", "Seelcted " + clientTypeJson);
-                int previouslySelectedClientType = adapterforClientType.getPosition(clientTypeJson);
-                ClientTypeSpinner.setSelection(previouslySelectedClientType);
-                ClientTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("item", (String) parent.getItemAtPosition(position));
-                        selectedInSpinnerClientType = parent.getItemAtPosition(position).toString();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-
-                //clinet Type ends here
-
-
-                industrylistspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        // Log.e("item", (String) parent.getItemAtPosition(position));
-                        selectedInSpinner = parent.getItemAtPosition(position).toString();
-                       /* temp2 = String.valueOf(parent.getItemAtPosition(position));*/
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        });
-
-
-        requestQueue.add(jsonArrayRequest);
 
 
         updateButton.setOnClickListener(new View.OnClickListener() {
